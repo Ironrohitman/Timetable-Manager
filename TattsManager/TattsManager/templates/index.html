@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  body, html {
+    border: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: ;
+    color: #9D9DA1;
+    font-family:  'Lato', sans-serif;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#sidebar{
+  background-color: white;
+  height: 100vh;
+  width: 14%;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+z-index: 0;
+border-radius: 10px;
+
+}
+
+#settingsRef{
+  bottom: 15%;
+  position: absolute;
+  left: 1%;
+
+}
+
+#mainBody{
+  background-color: #FAFBFB;
+
+
+  height: 100vh;
+  width: 86%;
+  z-index: -1;
+  left: 14%;
+  position: absolute;
+
+
+
+}
+
+
+
+#nextDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#previousDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#sendIcon {
+
+      transition: 1s;
+    }
+
+#sendIcon:hover {
+      width: 60%;
+
+    }
+
+    .square_btn {
+      display: inline-block;
+      padding: 7px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      color: #59BC0A;
+
+      transition: .4s;
+      height: 30px;
+      width: 200px;
+      text-align: center;
+      vertical-align: middle;
+      padding-top: 15px;
+      font-family: Arial;
+      background-color: #E2D922;
+      font-size: 20px;
+
+
+
+    }
+
+    .square_btn:hover {
+      color: #E2D922;
+      background-color: #59BC0A;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 25%;
+      height: 65%;
+      border-radius: 15px;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .dot:hover {
+      cursor: pointer;
+    }
+
+    #resetDayRef:hover{
+      background-color: black;
+    }
+
+</style>
+
+
+
+<body>
+  <div class="row">
+
+
+    <div class="column" id = "sidebar">
+
+      <div id = "topIcon" style = "padding-top: 2vh;">
+            <i class="material-icons" style = "position: absolute; padding: 4.5vh; display: inline-block; left: 3%; color: black; font-size: 8vh;"><span class="material-symbols-outlined">edit_calendar</span></i>
+
+      </div>
+
+      <div id = "individualRef" style = "padding-top: 15vh; ">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">person</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Individual</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh; color: #C98FFF;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">group</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Group</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">manage</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Profiles</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">summarize</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh; "><b>Summary</b></p>
+      </div>
+
+
+
+      <div>
+
+      </div>
+
+      <div>
+
+      </div>
+
+      <div id = "settingsRef">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block;">settings</i>
+            <p style = "position: absolute; left: 8vh;  font-size: 2.6vh;"><b>Settings</b></p>
+      </div>
+
+    </div>
+
+
+
+    <div class="column" id = "mainBody" style = "z-index: 0;">
+
+      <div id = "header">
+        <div class = "column" id = "currentPersonRef" style = "height: 10%; top: 0%; position: absolute;">
+          <h1 style = "left: 5%; position: absolute; color: black;">Rohit's Timetable</h1>
+        </div>
+
+        <div class = "column" id = "searchBarRef" style = "height: 10%;  top: 3%; position: absolute; left: 50%; position: absolute;  width: 27%; ">
+          <div style = "position: absolute; left: 65%; background-color: #FAFBFB; width: 100%; border-radius: 10px; height: 50%; background-color: #FAFBFB; ">
+
+              <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" style = "position: absolute; height: 100%; width: 90%; border-radius: 10px; text-indent: 2%; border-color: white; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;  outline: none; border-style: solid;">
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class = "column">
+
+        <div style = "height: 15%; background-color: white; top: 13%; position: absolute; left: 3%; width: 60%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px; " >
+
+            <div style = "width: 25%; left:0%; position: absolute; height: 100%; background-color: white; border-radius: 10px; " class = "dropdown">
+
+              <i class="material-icons" style = "position: absolute; padding: 2.3vh; display: inline-block; left: 15%; color: #F8AE35; background-color: #FFE3B6; border-radius: 10px; top: 3vh; ">date_range</i>
+              <div  style = "position: absolute; left: 51%; top: 28%; color: #B0B0B0; font-size: 2.4vh;"><b>Date Range</b></div>
+              <div style = "position: absolute; left: 51%; top: 26%; color: #585757; font-size: 2.6vh;"><h6>Apr 1st-7th</h6></div>
+
+
+
+              <div style = "border-right: 2px solid #F9F7F9; position: absolute; left: 100%; top: 1vh; height: 12vh; color: white;"> </div>
+
+            </div>
+
+
+            <div style = "width: 25%; left:25%; position: absolute; height: 100%;">
+
+              <i class="material-icons" style = "position: absolute; padding: 2.3vh; display: inline-block; left: 10%; color: #E954FD; background-color: #FAE6FD; border-radius: 10px; top: 3vh; ">content_copy</i>
+              <div style = "position: absolute; left: 46%; top: 28%; color: #B0B0B0; font-size: 2.3vh; "><b>Copy Previous</b></div>
+              <div style = "position: absolute; left: 46%; top: 26%; color: #585757; font-size: 2.6vh;"><h6>Press to copy</h6></div>
+              <div style = "border-right: 2px solid #F9F7F9; position: absolute; left: 100%; top: 1vh; height: 12vh; color: white;"> </div>
+
+            </div>
+            <div style = "width: 25%; left:50%; position: absolute; height: 100%;">
+
+              <i class="material-icons" style = "position: absolute; padding: 2.3vh; display: inline-block; left: 15%; color: #2ECCF0; background-color: #D4F7FF; border-radius: 10px; top: 3vh; ">save</i>
+              <div style = "position: absolute; left: 51%; top: 28%; color: #B0B0B0; font-size: 2.5vh;"><b>Save</b></div>
+              <div style = "position: absolute; left: 51%; top: 26%; color: #585757; font-size: 2.6vh;"><h6>Press to save</h6></div>
+              <div style = "border-right: 2px solid #F9F7F9; position: absolute; left: 100%; top: 1vh; height: 12vh; color: white;"> </div>
+
+             </div>
+            <div style = "width: 25%; left: 75%; position: absolute; cursor: pointer; height: 100%;" id = "sendDiv">
+
+
+              <div>
+
+              <i  id = "sendIcon" class="material-icons" style = "position: absolute; padding: 2.3vh; display: inline-block; left: 15%; color: #EB3F2B; background-color: #FFB2A9; border-radius: 10px; top: 3vh; ">send</i>
+              <div id = "sendText"style = "position: absolute; left: 51%; top: 28%; color: #B0B0B0; font-size: 2.5vh;"><b>Send</b></div>
+              <div id = "sendTextTwo" style = "position: absolute; left: 51%; top: 26%; color: #585757; font-size: 2.6vh;"><h6>Press to send</h6></div>
+
+            </div>
+
+
+
+
+             </div>
+         </div>
+
+
+
+        <div id = "timetable" style = "height: 65%; background-color: white; top: 32%; position: absolute; left: 3%; width: 60%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+
+            <div style = "width: 100%; background-color: white; border-radius: 10px; ">
+              <div style = "left: 41%; position: absolute; top: 5%; color: #DEDEDE;">
+                <input type="week" id="selectedWeekRef" name="week" style = "color: #898786;">
+              </div>
+              <br>
+              <br>
+             </div>
+
+            <div class = "column" style = "width: 12.5%; font-size: 12px; color: white; ">x</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #BD79F7; left: 1%; font-weight: bold" id = "(0)">Mon 10</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; left: 0%;" id = "(1)">Tue 11</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; left: 0%;" id = "(2)">Wed 12</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; left: 0%;" id = "(3)">Thu 13</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; right: 1%;" id = "(4)">Fri 14</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; right: 1%;" id = "(5)">Sat 15</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 5%; position: relative; color: #616161; right: 1%;" id = "(6)">Sun 16</div>
+
+            <div>
+              <div class = "column" style = "width: 10%; padding-top:6%; font-size: 1.5vh; vertical-align: middle;">
+                  <div style = "height: 3.5vh; padding-left: 40%; ">08 am </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">09 am </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">10 am </div>
+                  <div style = "height: 3.75vh; padding-left: 40%;">11 am </div>
+                  <div style = "height: 3.75vh; padding-left: 40%;">12 pm </div>
+                  <div style = "height: 3.75vh; padding-left: 40%;">01 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">02 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">03 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">04 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">05 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">06 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">07 pm </div>
+                  <div style = "height: 3.5vh; padding-left: 40%;">08 pm </div>
+              </div>
+
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; border-top-left-radius: 5px; background-color: #F5EBFF" id = "(0, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: #F5EBFF; border-right-style: none; border-bottom-left-radius: 5px; background-color: #F5EBFF" id = "(0, 20)"> </div>
+
+
+              </div>
+
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(1, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(1, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF; border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;  background-color: #F7F7F7;" id = "(2, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-right-style: none;" id = "(2, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(3, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(3, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(4, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(4, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-right-style: none;" id = "(4, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 8)"></div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(5, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(5, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-right-style: none; "id = "(5, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(5, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 12%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; border-top-right-radius: 5px;" id = "(6, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white;" id = "(6, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; " id = "(6, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7;" id = "(6, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; " id = "(6, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7;" id = "(6, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; " id = "(6, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white;" id = "(6, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-bottom-right-radius:5px;" id = "(6, 20)"> </div>
+
+
+              </div>
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+      <div class = "column" style = "height: 65%; background-color: white; top: 13%; position: absolute; left: 67%; width: 30%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+          <div style = "width: 100%; text-align: center; background-color: #C98FFF; border-top-left-radius: 10px; border-top-right-radius: 10px; " id = "currentDayTitleRef">
+              <div style = "font-size: 25px; padding-top: 7.5%; padding-bottom: 2%; color: #555456;" ><b>Monday</b></div>
+          </div>
+
+          <div style = "width: 100%; text-align: center; color: #A0BAFF;">
+              <div style = "font-size: 15px; background-color: #C98FFF; color: white; padding-bottom: 3%;">17/07/22 - 18/07/22</div>
+              <div style = " font-size: 13px;background-color: #FFAAAA; color: white;"> </div>
+
+              <p></p>
+
+
+          </div>
+
+
+
+          <div style = "width: 100%; background-color: red;">
+
+            <div class = "column" style = "background-color: white; width: 50%; text-align: center;">
+
+              <div style = "padding-bottom: 10px; padding-top: 5%; color: #555456;">Start time</div>
+              <input type = "time" id = "startTimeRef">
+
+
+            </div>
+            <div class = "column" style = "background-color: white; width: 50%; text-align: center;">
+              <div style = "padding-bottom: 10px; padding-top: 5%; color: #555456;">End time</div>
+
+              <input type = "time" id = "endTimeRef">
+
+            </div>
+
+
+          </div>
+
+          <div style = "width: 100%; background-color: white; padding-top: 10%; color: #555456;">
+            <div class = "column" style = "background-color: white; width: 50%; text-align: center;">
+
+              <div style = "padding-bottom: 10px; padding-top: 20%; color: #555456;">Hours this day:</div>
+              <div style = "font-size: 15px;" id = "hoursWorkedRef"> <b>0 hours</b></div>
+
+
+            </div>
+            <div class = "column" style = "background-color: white; width: 50%; text-align: center;">
+              <div style = "padding-bottom: 10px; padding-top: 20%; color: #555456;">Cleaning Duty</div>
+
+              <input type="checkbox" id="cleaningDuty" name="cleaningDuty" value="cleaningDuty">
+
+            </div>
+          </div>
+
+
+
+          <div style = "width: 100%; background-color: white; padding-top: 40%; color: #555456;">
+            <div >
+
+                <div class='container'>
+
+        <form>
+            <a href=# id=test><button class='btn btn-default'>Test</button></a>
+        </form>
+
+</div>
+            </div>
+          </div>
+
+
+
+
+          <div style = "width: 100%; position: absolute; top: 85%;">
+              <div class = "column" style = " height: 100%; width: 49%; text-align: center; border-right: 1px solid purple;" id = "previousDayRef">Previous</div>
+              <div class = "column" style = "width: 49%; text-align: center; unselectable = on; " id = "nextDayRef">Next</div>
+          </div>
+
+
+      </div>
+
+
+
+
+      <div class = "column" style = "height: 15%; background-color: white; top: 82%; position: absolute; left: 67%; width: 30%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+        <div  style = "width: 50%; left:0%; position: absolute;" class = "dropdown">
+
+
+          <i class="material-icons" style = "font-size: 50px; left: 35%; position:absolute; padding-top: 10%;">arrow_backward</i>
+
+
+
+
+          <div style = "border-right: 2px solid #F9F7F9; position: absolute; left: 100%; top: 1vh; height: 12vh; color: white;"> </div>
+
+        </div>
+
+        <div style = "width: 50%; left:50%; position: absolute;">
+
+          <i class="material-icons" style = "font-size: 50px; left: 35%;; position:absolute;  padding-top: 10%; ">arrow_forward</i>
+
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+
+  </div>
+
+
+
+</body>
+<script>
+
+
+
+class UpdateCurrentDayDisplay{
+
+    constructor(currentWeek){
+        this.currentIndex = 0;
+        this.days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday"};
+        this.currentWeek = currentWeek;
+
+
+    }
+
+    getIndex(){
+      return this.currentIndex%7;
+    }
+
+    updateTitle(currentIndex){
+        let titleRef = document.getElementById("currentDayTitleRef");
+        let currentDay = this.days[currentIndex]
+        titleRef.innerHTML = `<div style = "font-size: 25px; padding-top: 7.5%; padding-bottom: 2%; color: #555456;" id = "currentDayTitleRef"><b>${currentDay}</b></div>`
+
+
+    }
+
+
+    updateNextDisplay(currentIndex){
+        let currentDayRef = document.getElementById("(" + currentIndex + ")");
+        currentDayRef.style.color = "#BD79F7"
+        currentDayRef.style.fontWeight = "bold"
+
+
+        if(currentIndex%2==0){
+          this.fillColumn(currentIndex, "#F5EBFF", "#EFDFFE")
+        }
+        else{
+          this.fillColumn(currentIndex, "#EFDFFE", "#F5EBFF")
+        }
+    }
+
+    restorePreviousDisplay(currentIndex){
+        let currentDayRef = document.getElementById("(" + (currentIndex) + ")");
+        currentDayRef.style.color = "#616161"
+        currentDayRef.style.fontWeight = "normal"
+
+        if((currentIndex)%2==0){
+          this.fillColumn((currentIndex), "white", "#F7F7F7")
+        }
+        else{
+          this.fillColumn((currentIndex), "#F7F7F7", "white")
+        }
+    }
+
+    fillColumn(index, colour1, colour2){
+
+      for(let i = 8; i < 21; i++ ){
+        let rowRef = document.getElementById("(" + index + ", " + i + ")");
+        if(i%2 == 0){
+          rowRef.style.backgroundColor = colour1;
+        }
+        else{
+          rowRef.style.backgroundColor = colour2;
+        }
+      }
+
+    }
+
+    next(){
+        this.currentIndex++;
+        this.updateTitle(this.currentIndex%7)
+        this.updateNextDisplay(this.currentIndex%7);
+        this.restorePreviousDisplay((this.currentIndex-1)%7);
+        this.updateLocalStorage("currentIndex", this.currentIndex%7)
+
+
+    }
+
+    previous(){
+        this.currentIndex--;
+        this.updateTitle((7+this.currentIndex)%7)
+        this.updateNextDisplay((7+this.currentIndex)%7);
+        this.restorePreviousDisplay((7+this.currentIndex + 1)%7);
+        this.currentIndex = (7+this.currentIndex)%7;
+        this.updateLocalStorage("currentIndex", this.currentIndex)
+
+    }
+
+    updateLocalStorage(key, item){
+      localStorage.setItem(key, item);
+
+    }
+
+
+}
+
+class AddDayDisplay{
+  constructor(currentWeek){
+    this.timetableDisplay = new TimeTableDisplay(currentWeek);
+    this.dayInfoDisplay = new DayInfoDisplay(currentWeek);
+  }
+
+  updateDisplay(index, startTime, endTime, colour){
+    this.timetableDisplay.update(index, startTime, endTime, colour);
+    this.dayInfoDisplay.updateHoursWorked()
+
+  }
+
+
+
+
+
+}
+
+
+class TimeTableDisplay{
+  constructor(){
+
+  }
+
+  updateTop(index, startTime, endTime, colour){
+    let topBarRef = document.getElementById("(" + index + ", " + Math.floor(startTime) + ")");
+    let height = 0;
+    if(startTime == Math.floor(startTime)){
+      height = 100;
+    }
+    else{
+      height = (Math.ceil(startTime) - startTime)*100;
+    }
+
+    let top = 100 - height;
+    topBarRef.innerHTML = `<div style = "width: 100%; height: 50%;  position: relative; border-top-left-radius: 5px; border-top-right-radius: 5px; z-index: 10; opacity: 1;" id = "currentTopBar"> </div>`
+    let topBarUpdateRef = document.getElementById("currentTopBar");
+    topBarUpdateRef.id = "currentTopBar" + index.toString();
+    topBarUpdateRef = document.getElementById("currentTopBar" + index.toString());
+    topBarUpdateRef.style.height = (height + 5).toString() + "%";
+    topBarUpdateRef.style.top = top.toString() + "%";
+    topBarUpdateRef.style.backgroundColor = colour;
+  }
+
+  updateBottom(index, startTime, endTime, colour){
+    let bottomBarRef = document.getElementById("(" + index + ", " + Math.ceil(endTime) + ")");
+    console.log(bottomBarRef)
+    let height = 0;
+    if(endTime == Math.floor(endTime)){
+      height = 100;
+    }
+    else{
+      height = (endTime - Math.floor(endTime))*100;
+    }
+    console.log(height)
+    let bottom = 100 - height;
+    bottomBarRef.innerHTML = `<div style = "width: 100%; height: 5%;  position: relative; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; opacity: 1;" id = "currentBottomBar"> </div>`
+    let bottomBarUpdateRef = document.getElementById("currentBottomBar");
+    bottomBarUpdateRef.id = "currentBottomBar" + index.toString();
+    bottomBarUpdateRef = document.getElementById("currentBottomBar" + index.toString());
+    bottomBarUpdateRef.style.height = height.toString() + "%";
+
+    bottomBarUpdateRef.style.backgroundColor = colour;
+
+  }
+
+  updateMiddle(index, startTime, endTime, colour){
+    console.log(parseFloat(startTime) + 1)
+    for(let i = Math.floor(parseFloat(startTime)+1); i < endTime; i++){
+      let middleBarRef = document.getElementById("(" + index + ", " + i + ")");
+      middleBarRef.innerHTML = `<div style = "width: 100%; height: 108%;  background-color: blue; position: relative;  padding:0; outline: 0%; margin: 0%; display: inline-flex; justify-content: center; align-items: center; z-index: 99; color: white;  opacity: 1;" id = "currentMiddleBar"> </div>`
+      let middleBarUpdateRef = document.getElementById("currentMiddleBar");
+      middleBarUpdateRef.id = index.toString() + "currentMiddleBar" + i.toString();
+      middleBarUpdateRef = document.getElementById(index.toString() + "currentMiddleBar" + i.toString());
+
+      middleBarUpdateRef.style.backgroundColor = colour;
+    }
+  }
+
+  updateText(index, startTime, endTime, colour){
+    let middle = Math.floor((Math.floor(startTime) + Math.floor(endTime))/2);
+    let leftShift = middle - 1;
+    let rightShift = middle + 1;
+
+    let topBarRef = document.getElementById(index.toString() + "currentMiddleBar" + leftShift.toString());
+    let middleBarRef = document.getElementById(index.toString() + "currentMiddleBar" + middle.toString());
+    let bottomBarRef = document.getElementById(index.toString() + "currentMiddleBar" + rightShift.toString());
+
+    if(startTime > 12){
+      startTime = (startTime - 12).toString() + "pm"
+    }
+    else{
+      startTime = (startTime).toString() + "am"
+    }
+
+    if(endTime > 12){
+      endTime = (endTime - 12).toString() + "pm"
+    }
+    else{
+      endTime = (endTime).toString() + "am"
+    }
+
+
+    topBarRef.innerHTML = startTime;
+
+    middleBarRef.innerHTML = "to";
+
+    middleBarRef.style.fontWeight = "bold";
+    bottomBarRef.innerHTML = endTime;
+
+  }
+
+  update(index, startTime, endTime, colour){
+    this.updateTop(index, startTime, endTime, colour);
+    this.updateMiddle(index, startTime, endTime, colour);
+    this.updateBottom(index, startTime, endTime, colour);
+    this.updateText(index, startTime, endTime, colour);
+  }
+
+}
+
+
+class NewShift{
+      constructor(currentWeek){
+        this.currentIndex = 4;
+        this.displayControl = new AddDayDisplay(currentWeek);
+        this.currentWeek = currentWeek;
+      }
+
+      addDay(){
+        this.updateCurrentIndex();
+        let startTime = document.getElementById("startTimeRef").value;
+        let endTime = document.getElementById("endTimeRef").value;
+
+        console.log(startTime)
+        console.log(endTime)
+
+        if(startTime != "" && endTime != ""){
+          let newStartTime = startTime.substring(0,2) + "." + startTime.substring(3,5);
+          let newEndTime = endTime.substring(0,2) + "." + endTime.substring(3,5);
+          let colourBook = this.getItem("colourBook")
+          if(newEndTime > newStartTime){
+              this.restoreColumn()
+              this.displayControl.updateDisplay(this.currentIndex, this.reformatNum(newStartTime), this.reformatNum(newEndTime),colourBook[this.currentIndex]);
+              this.updateInfo(newStartTime, newEndTime);
+
+
+          }
+          else{
+            this.restoreColumn()
+
+          }
+        }
+      }
+
+      updateInfo(startTime, endTime){
+
+          let hours = endTime - startTime;
+          let currentDay = this.currentWeek.getDay(this.getItem("currentIndex"));
+          console.log(currentDay)
+          currentDay.changeStartTime(startTime);
+          currentDay.changeEndTime(endTime);
+          currentDay.changeHoursWorked(hours);
+      }
+
+      reformatNum(num){
+        console.log(num)
+        let integer = Math.floor(num);
+        let decimal = Math.floor((Math.floor((num - integer)*100)/60)*100)/100;
+        console.log(decimal)
+        let output = integer + decimal
+
+        return output.toFixed(1);
+      }
+
+      restoreColumn(){
+          for( let i = 8; i < 21; i++){
+            document.getElementById("(" + this.currentIndex.toString() + ", " + i.toString() + ")").innerHTML = null;
+
+          }
+      }
+
+      updateCurrentIndex(){
+        let currentIndex = localStorage.getItem("currentIndex");
+        this.currentIndex = currentIndex;
+      }
+
+      getItem(key){
+        let item = localStorage.getItem(key);
+        item = JSON.parse(item);
+        return item;
+      }
+
+
+
+
+
+}
+
+class WeekTimetable{
+  constructor(){
+    this.days = [];
+    this.initialise();
+  }
+
+  initialise(){
+    let monday = new DayNode(0, "Monday");
+    let tuesday = new DayNode(1, "Tuesday");
+    let wednesday = new DayNode(2, "Wednesday");
+    let thursday = new DayNode(3, "Thursday");
+    let friday = new DayNode(4, "Friday");
+    let saturday = new DayNode(5, "Saturday");
+    let sunday = new DayNode(6, "Sunday");
+
+    let weekArray = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
+    this.days = weekArray;
+  }
+
+  getDay(index){
+    let day = this.days[index];
+    return day;
+  }
+
+
+}
+
+class DayNode{
+  constructor(index, name){
+    this.index = index;
+    this.name = name;
+    this.startTime = undefined;
+    this.endTime = undefined;
+    this.startTimeDate = undefined;
+    this.endTimeDate = undefined;
+    this.hoursWorked = 0;
+    this.hasCD = false;
+  }
+
+  changeStartTime(startTime){
+    this.startTime = startTime;
+  }
+
+  changeEndTime(endTime){
+    this.endTime = endTime;
+  }
+
+  updateCD(hasCD){
+    this.hasCD = hasCD;
+  }
+
+  changeHoursWorked(hours){
+    this.hoursWorked = hours;
+  }
+
+  getStartTime(){
+    return this.startTime;
+  }
+
+  getEndTime(){
+    return this.endTime;
+  }
+
+  getHoursWorked(){
+    return this.hoursWorked;
+  }
+
+  getHasCd(){
+    return this.hasCD;
+  }
+
+
+}
+
+class DayInfoDisplay{
+
+  constructor(currentWeek){
+    this.currentWeek = currentWeek;
+
+  }
+
+  updateHoursWorked(){
+    console.log(this.currentWeek)
+    let day = this.getCurrentDay();
+    let hours = day.getHoursWorked();
+    let hoursRef = document.getElementById("hoursWorkedRef")
+    hoursRef.style.fontWeight = "bold";
+    hoursRef.innerHTML = hours.toString() + " hours"
+  }
+
+  updateStartTime(day){
+    let startTime = day.getStartTime();
+      if(startTime == undefined){
+        document.getElementById("startTimeRef").value = null;
+      }
+
+      let formattedTime = this.getFormattedTime(startTime);
+      document.getElementById("startTimeRef").value = formattedTime;
+  }
+
+  updateEndTime(day){
+    let endTime = day.getEndTime();
+      if(endTime == undefined){
+        document.getElementById("endTimeRef").value = null;
+      }
+
+    let formattedTime = this.getFormattedTime(endTime);
+      document.getElementById("endTimeRef").value = formattedTime;
+  }
+
+  updateCD(day){
+    let hasCD = day.getHasCd();
+      document.getElementById("cleaningDuty").checked = hasCD;
+  }
+
+  updateDisplay(){
+    let day = this.getCurrentDay();
+    console.log(day)
+    this.updateHoursWorked(day);
+    this.updateStartTime(day);
+    this.updateEndTime(day);
+    this.updateCD(day);
+  }
+
+  getCurrentDay(){
+    let currentIndex = localStorage.getItem("currentIndex");
+    currentIndex = JSON.parse(currentIndex);
+    return this.currentWeek.getDay(currentIndex)
+  }
+
+  getFormattedTime(time){
+    let output = "";
+      if(time = Math.floor(time)){
+        if(time > 9)
+          output = time.toString() + ":00";
+        else{
+          output = "0" + time.toString() + ":00";
+        }
+      }
+      else{
+        if(time > 9){
+          output = time.toString() + ":0"
+        }
+        else{
+          output = "0" + time.toString() + ":0";
+        }
+      }
+    return output;
+  }
+
+
+
+}
+
+class MasterDisplayControl{
+
+  constructor(currentWeek){
+    this.currentWeek = currentWeek;
+    this.currentDayDisplay = new UpdateCurrentDayDisplay(currentWeek);
+    this.newShift = new NewShift(currentWeek);
+    this.dayInfo = new DayInfoDisplay(currentWeek);
+  }
+
+  updatePrevious(){
+    this.currentDayDisplay.previous();
+    this.dayInfo.updateDisplay();
+  }
+
+  updateNext(){
+    this.currentDayDisplay.next();
+    this.dayInfo.updateDisplay();
+  }
+
+  updateDay(){
+    this.newShift.addDay();
+    this.dayInfo.updateHoursWorked();
+  }
+
+  updateCD(){
+    let currentDay = this.currentWeek.getDay(this.getCurrentIndex())
+    let hasCD = document.getElementById("cleaningDuty").checked;
+    currentDay.updateCD(hasCD);
+  }
+
+  getCurrentIndex(){
+    let currentIndex = localStorage.getItem("currentIndex");
+    currentIndex = JSON.parse(currentIndex);
+    return currentIndex;
+  }
+
+
+}
+
+
+
+
+
+//FUNCTIONAL CODE
+
+let colourDictionary = {0: "#7FD6C8", 1: "#7FCED6", 2: "#7FB9D6", 3: "#7FA0D6", 4: "#8A7FD6", 5: "#B87FD6", 6: "#D67FCE"}
+colourDictionary = JSON.stringify(colourDictionary);
+localStorage.setItem("colourBook", colourDictionary)
+localStorage.setItem("currentIndex", 0)
+
+
+let currentWeek = new WeekTimetable();
+//let toggleControl = new UpdateCurrentDayDisplay(currentWeek);
+
+
+let toggleControl = new MasterDisplayControl(currentWeek);
+
+
+
+document.getElementById("nextDayRef").addEventListener("click", function () {
+  toggleControl.updateNext();});
+
+document.getElementById("previousDayRef").addEventListener("click", function () {
+    toggleControl.updatePrevious();});
+
+document.getElementById("selectedWeekRef").addEventListener("change", function (){
+  alert(document.getElementById("selectedWeekRef").value)
+});
+
+document.getElementById("startTimeRef").addEventListener("change", function (){
+  console.log("bye")
+  toggleControl.updateDay();
+
+});
+
+document.getElementById("endTimeRef").addEventListener("change", function (){
+  console.log("hi")
+  toggleControl.updateDay();
+});
+
+document.getElementById("cleaningDuty").addEventListener("change", function (){
+  toggleControl.updateCD();
+
+});
+
+document.getElementById("resetDayRef ").addEventListener("click", function(){
+
+});
+
+
+function checkKey(e) {
+    e = e || window.event;
+    let key = e.keyCode;
+
+    if (key == '37'){
+      toggleControl.updatePrevious();
+
+    }
+    else if (key == '39'){
+      toggleControl.updateNext();
+
+
+    }
+
+
+}
+
+document.onkeydown = checkKey;
+
+
+
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/background_process_test',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
+
+</html>
