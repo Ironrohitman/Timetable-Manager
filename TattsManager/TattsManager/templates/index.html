@@ -694,7 +694,7 @@ class AddDayDisplay{
 
 class TimeTableDisplay{
   constructor(){
-
+      this.currentWeek = currentWeek;
   }
 
   updateTop(index, startTime, endTime, colour){
@@ -817,7 +817,7 @@ class NewShift{
           if(newEndTime > newStartTime){
               this.restoreColumn()
               this.displayControl.updateDisplay(this.currentIndex, this.reformatNum(newStartTime), this.reformatNum(newEndTime),colourBook[this.currentIndex]);
-              this.updateInfo(newStartTime, newEndTime);
+              this.updateInfo(startTime, endTime, this.reformatNum(newStartTime), this.reformatNum(newEndTime));
 
 
           }
@@ -828,13 +828,16 @@ class NewShift{
         }
       }
 
-      updateInfo(startTime, endTime){
-
-          let hours = endTime - startTime;
+      updateInfo(startTime, endTime, newStartTime, newEndTime){
+          console.log(startTime)
+          console.log(endTime)
+          let hours = (newEndTime - newStartTime).toFixed(1);
           let currentDay = this.currentWeek.getDay(this.getItem("currentIndex"));
           console.log(currentDay)
-          currentDay.changeStartTime(startTime);
-          currentDay.changeEndTime(endTime);
+          currentDay.changeStartTimeDate(startTime);
+          currentDay.changeEndTimeDate(endTime);
+          currentDay.changeStartTime(newStartTime);
+          currentDay.changeEndTime(newEndTime);
           currentDay.changeHoursWorked(hours);
       }
 
@@ -911,6 +914,14 @@ class DayNode{
     this.hasCD = false;
   }
 
+  changeStartTimeDate(startTimeDate){
+    this.startTimeDate = startTimeDate;
+  }
+
+  changeEndTimeDate(endTimeDate){
+    this.endTimeDate = endTimeDate;
+  }
+
   changeStartTime(startTime){
     this.startTime = startTime;
   }
@@ -931,8 +942,16 @@ class DayNode{
     return this.startTime;
   }
 
+  getStartTimeDate(){
+    return this.startTimeDate;
+  }
+
   getEndTime(){
     return this.endTime;
+  }
+
+  getEndTimeDate(){
+    return this.endTimeDate;
   }
 
   getHoursWorked(){
@@ -963,23 +982,24 @@ class DayInfoDisplay{
   }
 
   updateStartTime(day){
-    let startTime = day.getStartTime();
+    let startTime = day.getStartTimeDate();
       if(startTime == undefined){
         document.getElementById("startTimeRef").value = null;
       }
 
-      let formattedTime = this.getFormattedTime(startTime);
-      document.getElementById("startTimeRef").value = formattedTime;
+
+      document.getElementById("startTimeRef").value = startTime;
   }
 
   updateEndTime(day){
-    let endTime = day.getEndTime();
+    let endTime = day.getEndTimeDate();
+
       if(endTime == undefined){
         document.getElementById("endTimeRef").value = null;
       }
 
-    let formattedTime = this.getFormattedTime(endTime);
-      document.getElementById("endTimeRef").value = formattedTime;
+
+      document.getElementById("endTimeRef").value = endTime;
   }
 
   updateCD(day){
@@ -1002,43 +1022,13 @@ class DayInfoDisplay{
     return this.currentWeek.getDay(currentIndex)
   }
 
-  getFormattedTime(time){
-    let output = "";
-      if(time = Math.floor(time)){
-        if(time > 9)
-          output = time.toString() + ":00";
-        else{
-          output = "0" + time.toString() + ":00";
-        }
-      }
-      else{
-        if(time > 9){
-          output = time.toString() + ":0"
-        }
-        else{
-          output = "0" + time.toString() + ":0";
-        }
-      }
-    return output;
-  }
-
-
 
 }
 
 
-class DateSource{
-  constructor(){
-    this.dateBook = {};
-    this.dateBook["2022-W1"] = ["Jan", 3, 9];
-    this.dateBook["2022-W2"] = ["Jan", 10, 16];
-    this.dateBook["2022-W3"] = ["Jan", 17, 25];
-    this.dateBook["2022-W4"] = ["Jan", 24, 26];
-    this.dateBook["2022-W34"] = ["Aug", 22, 28];
-  }
 
 
-}
+
 class MasterDisplayControl{
 
   constructor(currentWeek){
