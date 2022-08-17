@@ -446,7 +446,7 @@ border-radius: 10px;
                   <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white;" id = "(6, 18)"> </div>
                   <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 19)"> </div>
                   <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 3.5vh; color: white; border-bottom-right-radius:5px;" id = "(6, 20)"> </div>
-
+                    <button type="submit" onclick='myfunction();'>Click Here to see your data</button>
 
               </div>
 
@@ -1217,8 +1217,6 @@ class UpdateWeekDispaly{
 }
 
 
-
-
 //FUNCTIONAL CODE
 
 let colourDictionary = {0: "#7FD6C8", 1: "#7FCED6", 2: "#7FB9D6", 3: "#7FA0D6", 4: "#8A7FD6", 5: "#B87FD6", 6: "#D67FCE"}
@@ -1304,6 +1302,26 @@ document.onkeydown = checkKey;
             return false;
           });
         });
+</script>
+<script>
+    function myfunction() {
+
+        const firstname = "rohit";
+        const lastname = "valanki";
+
+
+        const dict_values = {firstname, lastname} //Pass the javascript variables to a dictionary.
+        const s = JSON.stringify(dict_values); // Stringify converts a JavaScript object or value to a JSON string
+        console.log(s); // Prints the variables to console window, which are in the JSON format
+        window.alert(s)
+        $.ajax({
+            url:"/test",
+            type:"POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)});
+
+}
+
 </script>
 
 </html>

@@ -2,6 +2,10 @@ from flask import Flask, request, render_template,jsonify
 import webbrowser
 from threading import Timer
 import pywhatkit
+import json
+
+
+from flask import request
 
 
 app = Flask(__name__)
@@ -14,6 +18,14 @@ def home():
 
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:2000/')
+
+@app.route('/test', methods=['POST'])
+def test():
+    output = request.get_json()
+    print(output)  # This is the output that was stored in the JSON within the browser
+
+    return {}
+
 
 
 #rendering the HTML page which has the button
