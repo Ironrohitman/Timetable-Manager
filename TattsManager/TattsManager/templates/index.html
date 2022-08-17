@@ -879,6 +879,7 @@ class WeekTimetable{
   constructor(){
     this.days = [];
     this.initialise();
+    this.date = undefined;
   }
 
   initialise(){
@@ -899,6 +900,14 @@ class WeekTimetable{
     return day;
   }
 
+  changeDate(){
+    let date = document.getElementById("selectedWeekRef").value;
+    this.date = date;
+  }
+
+  getDate(){
+    return this.date;
+  }
 
 }
 
@@ -1036,6 +1045,7 @@ class MasterDisplayControl{
     this.currentDayDisplay = new UpdateCurrentDayDisplay(currentWeek);
     this.newShift = new NewShift(currentWeek);
     this.dayInfo = new DayInfoDisplay(currentWeek);
+    this.weekDisplay  = new UpdateWeekDispaly(dates);
   }
 
   updatePrevious(){
@@ -1063,6 +1073,11 @@ class MasterDisplayControl{
     let currentIndex = localStorage.getItem("currentIndex");
     currentIndex = JSON.parse(currentIndex);
     return currentIndex;
+  }
+
+  updateSelectedDate(){
+    this.weekDisplay.update();
+    this.currentWeek.changeDate();
   }
 
 
@@ -1202,7 +1217,7 @@ class UpdateWeekDispaly{
 }
 
 
-let x = new UpdateWeekDispaly(dates);
+
 
 //FUNCTIONAL CODE
 
@@ -1228,7 +1243,8 @@ document.getElementById("previousDayRef").addEventListener("click", function () 
 
 document.getElementById("selectedWeekRef").addEventListener("change", function (){
 
-  x.update();
+
+  toggleControl.updateSelectedDate();
 });
 
 document.getElementById("startTimeRef").addEventListener("change", function (){
