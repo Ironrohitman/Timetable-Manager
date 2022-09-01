@@ -3,12 +3,16 @@ import webbrowser
 from threading import Timer
 import pywhatkit
 import json
+import DataBaseManager
+
 
 
 from flask import request
 
 
 app = Flask(__name__)
+
+
 
 @app.route('/')
 @app.route('/home')
@@ -19,13 +23,17 @@ def home():
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:2000/')
 
+def updateDataBase(output):
+    update_manager = DataBaseManager.MasterDataManager()
+    return update_manager.writeWeek(output[0], int(output[1]), output[2])
+
 @app.route('/test', methods=['POST'])
 def test():
     output = request.get_json()
-    print(output)  # This is the output that was stored in the JSON within the browser
+    print(output)
+    updateDataBase(output)
 
     return {}
-
 
 
 #rendering the HTML page which has the button
@@ -43,4 +51,8 @@ def background_process_test():
 if __name__ == '__main__':
     Timer(1, open_browser).start()
     app.run(port=2000)
+
+
+def getWeekFromDB():
+    pass
 
