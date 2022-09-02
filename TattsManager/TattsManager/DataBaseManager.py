@@ -23,6 +23,16 @@ class MasterDataManager:
 
         return emp_week_object
 
+    def getWeekObjectJSON(self, object):
+
+        if(object[5] == "-"):
+            emp_index = int(object[1])
+        else:
+            return
+        selected_date = object[2:len(object)]
+        week_object = self.getWeekObject(emp_index, selected_date)
+        return week_object
+
     def writeWeek(self, json_week_object, emp_index, selected_date):
         date_index = int(selected_date[len(selected_date) - 2:len(selected_date)]) - 1;
         object_date = json_week_object["date"]

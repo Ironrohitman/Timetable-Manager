@@ -1323,8 +1323,33 @@ function checkKey(e) {
 
 document.onkeydown = checkKey;
 
+function potat(x){
+    alert(JSON.parse(x)["date"]);
+}
 
 
+
+function getData(emp_index, selected_date) {
+    let data = emp_index.toString() + selected_date;
+    let output = null;
+    fetch(data)
+      .then(function (response) {
+          return response.json();
+      }).then(function (text) {
+          console.log('GET response:');
+          console.log(text);
+          localStorage.setItem(69, JSON.stringify(text));
+          potat(localStorage.getItem(69))
+          return text;
+      });
+
+
+
+
+}
+
+
+getData(0, "2022-W35");
 
 
 

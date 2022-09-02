@@ -23,6 +23,31 @@ def home():
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:2000/')
 
+
+def getWeekFromDB(data):
+    data_manager = DataBaseManager.MasterDataManager()
+    return data_manager.getWeekObjectJSON(data)
+
+@app.route('/<getData>', methods=['GET', 'POST'])
+def testfn(getData):
+    if(getData[5] != "-"):
+        return {}
+    print(getData)
+    week_object = getWeekFromDB(getData)
+    print(week_object)
+    # GET request
+    if request.method == 'GET':
+        if week_object is not None:
+            message = week_object
+            return jsonify(message)  # serialize and use JSON headers
+
+    # POST request
+    if request.method == 'POST':
+        print(request.get_json())  # parse as JSON
+        return 'Sucesss', 200
+
+
+
 def updateDataBase(output):
     update_manager = DataBaseManager.MasterDataManager()
     return update_manager.writeWeek(output[0], int(output[1]), output[2])
@@ -53,6 +78,4 @@ if __name__ == '__main__':
     app.run(port=2000)
 
 
-def getWeekFromDB():
-    pass
 
