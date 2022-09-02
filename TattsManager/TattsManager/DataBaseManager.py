@@ -34,15 +34,16 @@ class MasterDataManager:
         return week_object
 
     def writeWeek(self, json_week_object, emp_index, selected_date):
+        print(json_week_object)
         date_index = int(selected_date[len(selected_date) - 2:len(selected_date)]) - 1;
-        object_date = json_week_object["date"]
+        object_date = json_week_object['date']
 
         json_week = json.dumps(json_week_object)
         lines = self.readData()
-        print(lines)
+
         emp_data = json.loads(lines[emp_index])
 
-        print(emp_data)
+
         emp_data[date_index] = json_week
 
 

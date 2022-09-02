@@ -915,6 +915,22 @@ class WeekTimetable{
 
   }
 
+  updateDateParam(date){
+    this.date = date;
+  }
+
+  changeDay(index, dayData){
+    let day = this.days[index];
+    day.changeEndTime(dayData[0]);
+    day.changeEndTimeDate(dayData[1]);
+    day.updateCD(dayData[3]);
+    day.changeHoursWorked(dayData[4]);
+    day.changeStartTime(dayData[5]);
+    day.changeStartTimeDate(dayData[6])
+    this.days[index] = day;
+  }
+
+
 }
 
 class DayNode{
@@ -1288,7 +1304,7 @@ function saveData() {
 function formatWeek(){
   let objectOutput = {"date": "2022-W03", "endTime": [null,null,null,null,null,null,null], "endTimeDate": [null,null,null,null,null,null,null], "hasCD": [false,false,false,false,false,false,false],
   "hoursWorked": [0,0,0,0,0,0,0], "startTime": [null,null,null,null,null,null,null], "startTimeDate": [null,null,null,null,null,null,null]};
-  objectOutput.date = currentWeek.date;
+  objectOutput["date"] = currentWeek.getDate();
   let days = currentWeek.days
 
   for(let i = 0; i < 7; i++){
@@ -1325,9 +1341,28 @@ document.onkeydown = checkKey;
 
 function potat(x){
     alert(JSON.parse(x)["date"]);
+    getUpdatedWeek(x)
 }
 
+function getUpdatedWeek(weekObject){
+    let weekData = JSON.parse(weekObject);
+    currentWeek.updateDateParam(weekData["date"]);
+    for(let i = 0; i < 7; i++){
 
+      let currentDay = currentWeek.getDay(i);
+
+      currentDay.changeEndTime(weekData["endTime"][i])
+      currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
+      currentDay.updateCD(weekData["hasCD"][i])
+      currentDay.changeHoursWorked(weekData["hoursWorked"][i])
+      currentDay.changeStartTime(weekData["startTime"][i])
+      currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
+
+    }
+
+
+
+}
 
 function getData(emp_index, selected_date) {
     let data = emp_index.toString() + selected_date;
@@ -1376,7 +1411,6 @@ getData(0, "2022-W35");
 
         for(let i = 0; i < 7; i++){
           let day = currentWeek.getDay(i);
-
           output += day.getStartTime().toString();
           output += day.getEndTime().toString();
           output += day.getHoursWorked().toString();

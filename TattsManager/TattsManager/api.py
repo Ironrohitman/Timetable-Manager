@@ -32,9 +32,9 @@ def getWeekFromDB(data):
 def testfn(getData):
     if(getData[5] != "-"):
         return {}
-    print(getData)
+
     week_object = getWeekFromDB(getData)
-    print(week_object)
+
     # GET request
     if request.method == 'GET':
         if week_object is not None:
@@ -50,12 +50,13 @@ def testfn(getData):
 
 def updateDataBase(output):
     update_manager = DataBaseManager.MasterDataManager()
+    print(output)
     return update_manager.writeWeek(output[0], int(output[1]), output[2])
 
 @app.route('/test', methods=['POST'])
 def test():
     output = request.get_json()
-    print(output)
+
     updateDataBase(output)
 
     return {}
