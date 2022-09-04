@@ -71,6 +71,7 @@ def json():
 @app.route('/background_process_test')
 def background_process_test():
     pywhatkit.sendwhats_image("+61402456069 ", "rotato.png", "Hello i have sent this from the bunny himself")
+    pywhatkit.sendwhats_image("+61402456069 ", "rotato.png", "Hello i have sent this from the bunny himself")
     print("Hello")
     return("nothing")
 

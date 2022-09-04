@@ -1057,6 +1057,65 @@ class DayInfoDisplay{
 }
 
 
+class ChangeWeekInfo{
+  constructor(currentWeek){
+    this.currentWeek = currentWeek;
+    this.dayInfoControl = new DayInfoDisplay(currentWeek);
+
+  }
+
+  getData(emp_index, selected_date) {
+      let data = emp_index.toString() + selected_date;
+      let output = null;
+      fetch(data)
+        .then(function (response) {
+            return response.json();
+        }).then(function (text) {
+            console.log('GET response:');
+            console.log(text);
+            this.updateWeekAux(text)
+            return text;
+        });
+
+  }
+
+  updateWeekAux(data){
+      this.getUpdatedWeek(data)
+  }
+
+  getUpdatedWeek(weekObject){
+      let weekData = JSON.parse(weekObject);
+      currentWeek.updateDateParam(weekData["date"]);
+      for(let i = 0; i < 7; i++){
+
+        let currentDay = currentWeek.getDay(i);
+        currentDay.changeEndTime(weekData["endTime"][i])
+        currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
+        currentDay.updateCD(weekData["hasCD"][i])
+        currentDay.changeHoursWorked(weekData["hoursWorked"][i])
+        currentDay.changeStartTime(weekData["startTime"][i])
+        currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
+
+      }
+
+
+
+  };
+
+  update(){
+    let selectedDate = document.getElementById("selectedWeekRef").value;
+
+    if(selectedDate[5] == "W"){
+      getData(0, selectedDate)
+    }
+  };
+
+
+
+
+
+}
+
 
 
 
@@ -1068,6 +1127,7 @@ class MasterDisplayControl{
     this.newShift = new NewShift(currentWeek);
     this.dayInfo = new DayInfoDisplay(currentWeek);
     this.weekDisplay  = new UpdateWeekDispaly(dates);
+    this.changeWeek = new ChangeWeekInfo(currentWeek)
   }
 
   updatePrevious(){
@@ -1102,6 +1162,9 @@ class MasterDisplayControl{
     this.currentWeek.changeDate();
   }
 
+  changeWeekInfo(){
+    this.changeWeek.update();
+  }
 
 }
 
@@ -1267,6 +1330,7 @@ document.getElementById("previousDayRef").addEventListener("click", function () 
 
 document.getElementById("selectedWeekRef").addEventListener("change", function (){
   toggleControl.updateSelectedDate();
+  toggleControl.changeWeekInfo();
 });
 
 document.getElementById("startTimeRef").addEventListener("change", function (){
@@ -1384,7 +1448,17 @@ function getData(emp_index, selected_date) {
 }
 
 
-getData(0, "2022-W35");
+
+//getData(0, "2022-W35");
+
+function testDate(){
+  let selectedDate = document.getElementById("selectedWeekRef").value;
+
+  if(selectedDate[5] == "W"){
+    getData(0, selectedDate)
+  }
+
+}
 
 
 
