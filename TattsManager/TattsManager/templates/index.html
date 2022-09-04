@@ -1061,26 +1061,18 @@ class ChangeWeekInfo{
   constructor(currentWeek){
     this.currentWeek = currentWeek;
     this.dayInfoControl = new DayInfoDisplay(currentWeek);
+    this.updateTimetableDisplay = new TimeTableDisplay(currentWeek)
 
   }
 
-  getData(emp_index, selected_date) {
-      let data = emp_index.toString() + selected_date;
-      let output = null;
-      fetch(data)
-        .then(function (response) {
-            return response.json();
-        }).then(function (text) {
-            console.log('GET response:');
-            console.log(text);
-            this.updateWeekAux(text)
-            return text;
-        });
-
+  resetCurrentDay(){
+    this.dayInfoControl.updateDisplay();
   }
+  restoreColumn(currentIndex){
+      for( let i = 8; i < 21; i++){
+        document.getElementById("(" + currentIndex.toString() + ", " + i.toString() + ")").innerHTML = null;
 
-  updateWeekAux(data){
-      this.getUpdatedWeek(data)
+      }
   }
 
   getUpdatedWeek(weekObject){
@@ -1098,15 +1090,61 @@ class ChangeWeekInfo{
 
       }
 
+  }
+  updateWeekAux(data){
+      this.getUpdatedWeek(data)
+  }
 
+    updateAllShifts(){
 
-  };
+      let colourBook = this.getLData("colourBook");
+
+      for(let i = 0; i < 7; i++){
+        let currentIndex = i;
+        let currentDay = this.currentWeek.getDay(currentIndex)
+        this.restoreColumn(currentIndex);
+          if(currentDay.getStartTime() != null && currentDay.getEndTime() != null){
+
+        let currentColour = colourBook[currentIndex];
+
+        this.updateTimetableDisplay.update(currentIndex,currentDay.getStartTime() , currentDay.getEndTime(), currentColour)
+      }
+      };
+
+      }
+
+    getLData(key){
+      let item = localStorage.getItem(key);
+      let itemJSON = JSON.parse(item);
+      return itemJSON;
+    }
+
+    potato(x){
+        alert(JSON.parse(x)["date"]);
+        //getUpdatedWeek(x)
+    }
+
+    getData(emp_index, selected_date) {
+      let data = emp_index.toString() + selected_date;
+      let output = null;
+      fetch(data)
+        .then(function (response) {
+            return response.json();
+        }).then(function (text) {
+            console.log('GET response:');
+            console.log(text);
+            localStorage.setItem(69, JSON.stringify(text));
+            potat(localStorage.getItem(69))
+            return text;
+        });
+
+    }
 
   update(){
     let selectedDate = document.getElementById("selectedWeekRef").value;
 
     if(selectedDate[5] == "W"){
-      getData(0, selectedDate)
+      this.getData(0, selectedDate)
     }
   };
 
@@ -1349,6 +1387,8 @@ document.getElementById("cleaningDuty").addEventListener("change", function (){
 
 });
 
+
+
 function saveData() {
 
 
@@ -1424,13 +1464,15 @@ function getUpdatedWeek(weekObject){
 
     }
 
-
+    let po = new ChangeWeekInfo(currentWeek)
+    po.updateAllShifts();
 
 }
 
 function getData(emp_index, selected_date) {
     let data = emp_index.toString() + selected_date;
     let output = null;
+let po = new ChangeWeekInfo(currentWeek)
     fetch(data)
       .then(function (response) {
           return response.json();
@@ -1439,6 +1481,8 @@ function getData(emp_index, selected_date) {
           console.log(text);
           localStorage.setItem(69, JSON.stringify(text));
           potat(localStorage.getItem(69))
+          po.resetCurrentDay()
+          po.updateAllShifts();
           return text;
       });
 
@@ -1459,6 +1503,7 @@ function testDate(){
   }
 
 }
+
 
 
 
@@ -1495,7 +1540,7 @@ function testDate(){
         return output;
     }
 
-    console.log(getWeekString())
+    //console.log(getWeekString())
 
 
 
