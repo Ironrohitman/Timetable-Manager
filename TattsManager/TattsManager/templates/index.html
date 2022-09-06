@@ -1057,43 +1057,23 @@ class DayInfoDisplay{
 }
 
 
+
+
 class ChangeWeekInfo{
-  constructor(currentWeek){
-    this.currentWeek = currentWeek;
-    this.dayInfoControl = new DayInfoDisplay(currentWeek);
-    this.updateTimetableDisplay = new TimeTableDisplay(currentWeek)
+    constructor(currentWeek){
+        this.currentWeek = currentWeek;
+        this.dayInfoControl = new DayInfoDisplay(currentWeek);
+        this.updateTimetableDisplay = new TimeTableDisplay(currentWeek)
+    }
+    resetCurrentDay(){
+      this.dayInfoControl.updateDisplay();
+    }
+    restoreColumn(currentIndex){
+        for( let i = 8; i < 21; i++){
+          document.getElementById("(" + currentIndex.toString() + ", " + i.toString() + ")").innerHTML = null;
 
-  }
-
-  resetCurrentDay(){
-    this.dayInfoControl.updateDisplay();
-  }
-  restoreColumn(currentIndex){
-      for( let i = 8; i < 21; i++){
-        document.getElementById("(" + currentIndex.toString() + ", " + i.toString() + ")").innerHTML = null;
-
-      }
-  }
-
-  getUpdatedWeek(weekObject){
-      let weekData = JSON.parse(weekObject);
-      currentWeek.updateDateParam(weekData["date"]);
-      for(let i = 0; i < 7; i++){
-
-        let currentDay = currentWeek.getDay(i);
-        currentDay.changeEndTime(weekData["endTime"][i])
-        currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
-        currentDay.updateCD(weekData["hasCD"][i])
-        currentDay.changeHoursWorked(weekData["hoursWorked"][i])
-        currentDay.changeStartTime(weekData["startTime"][i])
-        currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
-
-      }
-
-  }
-  updateWeekAux(data){
-      this.getUpdatedWeek(data)
-  }
+        }
+    }
 
     updateAllShifts(){
 
@@ -1110,8 +1090,9 @@ class ChangeWeekInfo{
         this.updateTimetableDisplay.update(currentIndex,currentDay.getStartTime() , currentDay.getEndTime(), currentColour)
       }
       };
+    }
 
-      }
+
 
     getLData(key){
       let item = localStorage.getItem(key);
@@ -1119,38 +1100,98 @@ class ChangeWeekInfo{
       return itemJSON;
     }
 
-    potato(x){
-        alert(JSON.parse(x)["date"]);
-        //getUpdatedWeek(x)
+    updateDayInfo(){
+        this.dayInfoControl.updateDisplay();
     }
 
-    getData(emp_index, selected_date) {
-      let data = emp_index.toString() + selected_date;
+
+
+    getUpdatedWeek(weekObject){
+        let weekData = JSON.parse(weekObject);
+        currentWeek.updateDateParam(weekData["date"]);
+        for(let i = 0; i < 7; i++){
+
+          let currentDay = currentWeek.getDay(i);
+
+          currentDay.changeEndTime(weekData["endTime"][i])
+          currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
+          currentDay.updateCD(weekData["hasCD"][i])
+          currentDay.changeHoursWorked(weekData["hoursWorked"][i])
+          currentDay.changeStartTime(weekData["startTime"][i])
+          currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
+
+        }
+
+
+        this.updateAllShifts();
+        this.updateDayInfo();
+
+    }
+
+    getDataAux(data){
+        alert(JSON.parse(data)["date"]);
+        this.getUpdatedWeek(data)
+    }
+
+    getData(empIndex, selectedDate){
+      let data = empIndex.toString() + selectedDate;
       let output = null;
+
       fetch(data)
         .then(function (response) {
             return response.json();
         }).then(function (text) {
+            let instance = new ChangeWeekInfo(currentWeek)
             console.log('GET response:');
             console.log(text);
             localStorage.setItem(69, JSON.stringify(text));
-            potat(localStorage.getItem(69))
+            instance.getDataAux(localStorage.getItem(69))
+            instance.resetCurrentDay()
+            //po.updateAllShifts();
+            //po.updateDayInfo();
             return text;
         });
+    }
+
+    update(){
+      let selectedDate = document.getElementById("selectedWeekRef").value;
+
+      if(selectedDate[5] == "W"){
+        this.getData(0, selectedDate)
+      }
+    };
+}
+
+
+
+
+
+
+
+function potat(x){
+    alert(JSON.parse(x)["date"]);
+    getUpdatedWeek(x)
+}
+
+function getUpdatedWeek(weekObject){
+    let weekData = JSON.parse(weekObject);
+    currentWeek.updateDateParam(weekData["date"]);
+    for(let i = 0; i < 7; i++){
+
+      let currentDay = currentWeek.getDay(i);
+
+      currentDay.changeEndTime(weekData["endTime"][i])
+      currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
+      currentDay.updateCD(weekData["hasCD"][i])
+      currentDay.changeHoursWorked(weekData["hoursWorked"][i])
+      currentDay.changeStartTime(weekData["startTime"][i])
+      currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
 
     }
 
-  update(){
-    let selectedDate = document.getElementById("selectedWeekRef").value;
-
-    if(selectedDate[5] == "W"){
-      this.getData(0, selectedDate)
-    }
-  };
-
-
-
-
+    let po = new ChangeWeekInfo(currentWeek)
+    po.updateAllShifts();
+    po.updateDayInfo();
 
 }
 
@@ -1389,6 +1430,8 @@ document.getElementById("cleaningDuty").addEventListener("change", function (){
 
 
 
+
+
 function saveData() {
 
 
@@ -1443,33 +1486,11 @@ function checkKey(e) {
 
 document.onkeydown = checkKey;
 
-function potat(x){
-    alert(JSON.parse(x)["date"]);
-    getUpdatedWeek(x)
-}
 
-function getUpdatedWeek(weekObject){
-    let weekData = JSON.parse(weekObject);
-    currentWeek.updateDateParam(weekData["date"]);
-    for(let i = 0; i < 7; i++){
 
-      let currentDay = currentWeek.getDay(i);
 
-      currentDay.changeEndTime(weekData["endTime"][i])
-      currentDay.changeEndTimeDate(weekData["endTimeDate"][i])
-      currentDay.updateCD(weekData["hasCD"][i])
-      currentDay.changeHoursWorked(weekData["hoursWorked"][i])
-      currentDay.changeStartTime(weekData["startTime"][i])
-      currentDay.changeStartTimeDate(weekData["startTimeDate"][i])
 
-    }
-
-    let po = new ChangeWeekInfo(currentWeek)
-    po.updateAllShifts();
-
-}
-
-function getData(emp_index, selected_date) {
+function getDataf(emp_index, selected_date) {
     let data = emp_index.toString() + selected_date;
     let output = null;
 let po = new ChangeWeekInfo(currentWeek)
@@ -1482,7 +1503,8 @@ let po = new ChangeWeekInfo(currentWeek)
           localStorage.setItem(69, JSON.stringify(text));
           potat(localStorage.getItem(69))
           po.resetCurrentDay()
-          po.updateAllShifts();
+          //po.updateAllShifts();
+          //po.updateDayInfo();
           return text;
       });
 
