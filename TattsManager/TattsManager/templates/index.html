@@ -1154,12 +1154,40 @@ class ChangeWeekInfo{
     }
 
     update(){
-      let selectedDate = document.getElementById("selectedWeekRef").value;
+      let selectedDate = localStorage.getItem("selectedDate");
+
 
       if(selectedDate[5] == "W"){
         this.getData(0, selectedDate)
       }
     };
+
+getTodaysDate(){
+  let output = null;
+
+  let currentDate = new Date();
+  let startDate = new Date(currentDate.getFullYear(), 0, 1);
+  let days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+  let year = startDate.getFullYear();
+  let weekNumber = Math.ceil(days / 7);
+
+  if(weekNumber < 10){
+    output = year.toString() + "-W0" + weekNumber.toString();
+  }
+  else{
+    output = year.toString() + "-W" + weekNumber.toString();
+  }
+
+
+  console.log(output)
+  return output
+
+}
+    updateWeekOnload(){
+        let selectedDate = this.getTodaysDate();
+        localStorage.setItem("selectedDate", selectedDate);
+        this.update();
+    }
 }
 
 
@@ -1245,6 +1273,11 @@ class MasterDisplayControl{
     this.changeWeek.update();
   }
 
+  changeOnloadWeek(){
+
+    this.changeWeek.updateWeekOnload();
+    //this.updateSelectedDate();
+  }
 }
 
 let dates = {
@@ -1399,7 +1432,7 @@ let currentWeek = new WeekTimetable();
 
 let toggleControl = new MasterDisplayControl(currentWeek);
 
-
+toggleControl.changeOnloadWeek()
 
 document.getElementById("nextDayRef").addEventListener("click", function () {
   toggleControl.updateNext();});
