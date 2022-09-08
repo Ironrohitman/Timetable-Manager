@@ -1064,6 +1064,7 @@ class ChangeWeekInfo{
         this.currentWeek = currentWeek;
         this.dayInfoControl = new DayInfoDisplay(currentWeek);
         this.updateTimetableDisplay = new TimeTableDisplay(currentWeek)
+        this.dateDisplay = new UpdateWeekDispaly(dates);
     }
     resetCurrentDay(){
       this.dayInfoControl.updateDisplay();
@@ -1129,7 +1130,7 @@ class ChangeWeekInfo{
     }
 
     getDataAux(data){
-        alert(JSON.parse(data)["date"]);
+        //alert(JSON.parse(data)["date"]);
         this.getUpdatedWeek(data)
     }
 
@@ -1186,6 +1187,8 @@ getTodaysDate(){
     updateWeekOnload(){
         let selectedDate = this.getTodaysDate();
         localStorage.setItem("selectedDate", selectedDate);
+        document.getElementById("selectedWeekRef").value = selectedDate;
+        this.dateDisplay.update(selectedDate);
         this.update();
     }
 }
@@ -1265,7 +1268,7 @@ class MasterDisplayControl{
   }
 
   updateSelectedDate(){
-    this.weekDisplay.update();
+    this.weekDisplay.update(null);
     this.currentWeek.changeDate();
   }
 
@@ -1317,15 +1320,19 @@ class UpdateWeekDispaly{
 
   }
 
-  update(){
-    this.updateInternalDate();
+  update(date){
+    this.updateInternalDate(date);
     this.updateTopBar();
     this.updateDays();
     this.updateRightDate();
   }
 
-  updateInternalDate(){
+  updateInternalDate(date){
+    if(date == null){
     this.currentDate = document.getElementById("selectedWeekRef").value;
+  }else {
+    this.currentDate = date;
+  }
   }
 
   updateTopBar(){
