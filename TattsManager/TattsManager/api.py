@@ -26,8 +26,10 @@ def open_browser():
 
 def getWeekFromDB(data):
     data_manager = DataBaseManager.MasterDataManager()
-    return data_manager.getWeekObjectJSON(data)
-
+    print(data)
+    output_data = [data_manager.getWeekObjectJSON(data), data_manager.getName(data)]
+    print(output_data)
+    return output_data
 @app.route('/<getData>', methods=['GET', 'POST'])
 def testfn(getData):
     if(getData[5] != "-"):

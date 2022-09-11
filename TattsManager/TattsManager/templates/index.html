@@ -226,7 +226,7 @@ border-radius: 10px;
 
       <div id = "header">
         <div class = "column" id = "currentPersonRef" style = "height: 10%; top: 0%; position: absolute;">
-          <h1 style = "left: 5%; position: absolute; color: black;">Rohit's Timetable</h1>
+          <h1 style = "left: 5%; position: absolute; color: black;" id = "currentPersonRef">Rohit's Timetable</h1>
         </div>
 
         <div class = "column" id = "searchBarRef" style = "height: 10%;  top: 3%; position: absolute; left: 50%; position: absolute;  width: 27%; ">
@@ -548,7 +548,7 @@ border-radius: 10px;
         <div  style = "width: 50%; left:0%; position: absolute;" class = "dropdown">
 
 
-          <i class="material-icons" style = "font-size: 50px; left: 35%; position:absolute; padding-top: 10%;">arrow_backward</i>
+          <i id = "leftArrow" class="material-icons" style = "font-size: 50px; left: 35%; position:absolute; padding-top: 10%;">arrow_backward</i>
 
 
 
@@ -559,7 +559,7 @@ border-radius: 10px;
 
         <div style = "width: 50%; left:50%; position: absolute;">
 
-          <i class="material-icons" style = "font-size: 50px; left: 35%;; position:absolute;  padding-top: 10%; ">arrow_forward</i>
+          <i id = "rightArrow" class="material-icons" style = "font-size: 50px; left: 35%;; position:absolute;  padding-top: 10%; ">arrow_forward</i>
 
 
 
@@ -1134,6 +1134,11 @@ class ChangeWeekInfo{
         this.getUpdatedWeek(data)
     }
 
+    updateTitle(name){
+      let nameRef = document.getElementById("currentPersonRef")
+      nameRef.innerHTML = `<h1 style = "left: 5%; position: absolute; color: black;" id = "currentPersonRef">${name}'s Timetable</h1>`
+    }
+
     getData(empIndex, selectedDate){
       let data = empIndex.toString() + selectedDate;
       let output = null;
@@ -1145,8 +1150,11 @@ class ChangeWeekInfo{
             let instance = new ChangeWeekInfo(currentWeek)
             console.log('GET response:');
             console.log(text);
-            localStorage.setItem(69, JSON.stringify(text));
-            instance.getDataAux(localStorage.getItem(69))
+            let name = text[1]
+
+            localStorage.setItem(69, JSON.stringify(text[0]));
+            instance.getDataAux(localStorage.getItem(69));
+            instance.updateTitle(name);
             instance.resetCurrentDay()
             //po.updateAllShifts();
             //po.updateDayInfo();
@@ -1157,9 +1165,10 @@ class ChangeWeekInfo{
     update(){
       let selectedDate = localStorage.getItem("selectedDate");
 
+      let emp_index = localStorage.getItem("empIndex");
 
       if(selectedDate[5] == "W"){
-        this.getData(0, selectedDate)
+        this.getData(emp_index, selectedDate)
       }
     };
 
@@ -1237,7 +1246,8 @@ class MasterDisplayControl{
     this.newShift = new NewShift(currentWeek);
     this.dayInfo = new DayInfoDisplay(currentWeek);
     this.weekDisplay  = new UpdateWeekDispaly(dates);
-    this.changeWeek = new ChangeWeekInfo(currentWeek)
+    this.changeWeek = new ChangeWeekInfo(currentWeek);
+    this.updateEmployee = new ChangeCurrentEmployee(currentWeek);
   }
 
   updatePrevious(){
@@ -1280,6 +1290,16 @@ class MasterDisplayControl{
 
     this.changeWeek.updateWeekOnload();
     //this.updateSelectedDate();
+  }
+
+  changeEmployeeRight(){
+    this.updateEmployee.incrementIndex()
+    this.changeWeek.update()
+  }
+
+  changeEmployeeLeft(){
+    this.updateEmployee.decrementIndex()
+    this.changeWeek.update()
   }
 }
 
@@ -1420,6 +1440,25 @@ class UpdateWeekDispaly{
   }
 }
 
+
+class ChangeCurrentEmployee{
+  constructor(currentWeek){
+    this.currentWeek = currentWeek;
+  }
+  incrementIndex(){
+    let currentIndex = localStorage.getItem("empIndex");
+    currentIndex++
+    localStorage.setItem("empIndex", currentIndex);
+  }
+
+  decrementIndex(){
+    let currentIndex = localStorage.getItem("empIndex");
+    currentIndex--
+    localStorage.setItem("empIndex", currentIndex);
+  }
+
+
+}
 //
 //
 //
@@ -1431,7 +1470,7 @@ let colourDictionary = {0: "#7FD6C8", 1: "#7FCED6", 2: "#7FB9D6", 3: "#7FA0D6", 
 colourDictionary = JSON.stringify(colourDictionary);
 localStorage.setItem("colourBook", colourDictionary)
 localStorage.setItem("currentIndex", 0)
-
+localStorage.setItem("empIndex", 0)
 
 let currentWeek = new WeekTimetable();
 //let toggleControl = new UpdateCurrentDayDisplay(currentWeek);
@@ -1467,6 +1506,15 @@ document.getElementById("cleaningDuty").addEventListener("change", function (){
   toggleControl.updateCD();
 
 });
+document.getElementById("rightArrow").addEventListener("click", function (){
+  toggleControl.changeEmployeeRight();
+
+});
+document.getElementById("leftArrow").addEventListener("click", function (){
+  toggleControl.changeEmployeeLeft();
+
+});
+
 
 
 
@@ -1476,7 +1524,7 @@ function saveData() {
 
 
     let selectedWeek = localStorage.getItem("selectedDate");
-    let emp_index = 2;
+    let emp_index = localStorage.getItem("empIndex");
 
     const s = JSON.stringify([formatWeek(), emp_index, selectedWeek]);
     window.alert(s)
