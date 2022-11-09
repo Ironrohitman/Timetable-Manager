@@ -4,7 +4,7 @@ from threading import Timer
 import pywhatkit
 import json
 import DataBaseManager
-
+import keyboard
 
 
 from flask import request
@@ -60,6 +60,19 @@ def test():
     output = request.get_json()
 
     updateDataBase(output)
+
+    return {}
+
+@app.route('/send', methods=['POST'])
+def sendMessage():
+    output = request.get_json()
+    pywhatkit.sendwhats_image("+61402456069 ", "potat.png", "Hello i have sent this from the bunny himself")
+    keyboard.press_and_release('ctrl+w')
+    print(output)
+    pywhatkit.sendwhats_image("+61402456069 ", "potat.png", "Hello i have sent this from the bunny himself")
+    keyboard.press_and_release('ctrl+w')
+    pywhatkit.sendwhatmsg_instantly("+61402456069", "Test msg.")
+    keyboard.press_and_release('ctrl+w')
 
     return {}
 
