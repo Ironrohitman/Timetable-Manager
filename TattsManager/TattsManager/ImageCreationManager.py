@@ -5,7 +5,8 @@ class ImageCreationManager:
 
     def create_image(self, dataObject, filePath, imageName):
         inputHTML = self.get_HTML(dataObject)
-        self.create_image_auxiliary(filePath, imageName, inputHTML)
+        return self.create_image_auxiliary(filePath, imageName, inputHTML)
+
 
     def create_image_auxiliary(self, filePath, imageName, inputHTML):
         html = inputHTML
