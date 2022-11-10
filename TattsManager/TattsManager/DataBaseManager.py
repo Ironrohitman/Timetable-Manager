@@ -1,4 +1,7 @@
 import json
+
+from TattsManager.TattsManager.ImageCreationManager import ImageCreationManager
+
 rohit = {"date": "2022-W03", "endTime": [None,None,None,None,None,None,None], "endTimeDate": [None,None,None,None,None,None,None], "hasCD": [False,False,False,False,False,False,False], "hoursWorked": [0,0,0,0,0,0,0], "startTime": [None,None,None,None,None,None,None], "startTimeDate": [None,None,None,None,None,None,None]}
 
 CONST_FILE_NAME = "Database.txt"
@@ -45,6 +48,8 @@ class MasterDataManager:
         date_index = int(selected_date[len(selected_date) - 2:len(selected_date)]) - 1;
         emp_data = json.loads(lines[emp_index])
         emp_week_object = json.loads(emp_data[date_index])
+        print("bundo")
+        print(emp_week_object)
 
         return emp_week_object
 
@@ -60,6 +65,8 @@ class MasterDataManager:
             return
         selected_date = object[2:len(object)]
         week_object = self.getWeekObject(emp_index, selected_date)
+
+        #self.test(emp_index, selected_date)
         return week_object
 
     def writeWeek(self, json_week_object, emp_index, selected_date):
@@ -116,6 +123,65 @@ class MasterDataManager:
             output.append(output_string)
 
         return output
+
+    def get_employee_data_object(self, emp_index, selected_date):
+        output = {}
+        week_object = self.getWeekObject(emp_index, selected_date)
+        output["Name"] = "Rohit"
+        for i in range(7):
+            output["date" + str(i)] = "09-Nov-22"
+            if week_object["startTimeDate"][i] is not None:
+                output["start" + str(i)] = week_object["startTimeDate"][i]
+            else:
+                output["start" + str(i)] = ""
+
+            if week_object["endTimeDate"][i] is not None:
+                output["end" + str(i)] = week_object["endTimeDate"][i]
+            else:
+                output["end" + str(i)] = ""
+
+            if week_object["hoursWorked"][i] != 0:
+                output["hours" + str(i)] = self.get_formatted_hours_worked(week_object["hoursWorked"][i])
+            else:
+                output["hours" + str(i)] = ""
+
+            if week_object["hasCD"][i]:
+                output["CD" + str(i)] = "CD"
+            else:
+                output["CD" + str(i)] = ""
+
+        print(output)
+        return output
+
+    def get_formatted_hours_worked(self, hours_worked):
+
+        output = ""
+        counter = 0
+        for char in hours_worked:
+            if char == ".":
+                output += ":"
+                counter = 1
+            else:
+
+                if counter == 1:
+                    end = str(int((int(char)/10)*60))
+                    if len(end) == 1:
+                        end+= "0"
+                    output += end
+                else:
+                    output += char
+        return output
+
+    def test(self, emp_index, selected_date):
+        x = ImageCreationManager()
+        filePath = "Image Database"
+        imageName = "the-huem5.png"
+        dataObject = self.get_employee_data_object(emp_index, selected_date)
+        x.create_image(dataObject, filePath, imageName)
+
+
+
+
 
 
 

@@ -3,20 +3,20 @@ from html2image import Html2Image
 class ImageCreationManager:
 
 
-    def create_image(self, dataObject, filePath, imageName):
-        inputHTML = self.get_HTML(dataObject)
-        return self.create_image_auxiliary(filePath, imageName, inputHTML)
+    def create_image(self, data_object, file_path, image_name):
+        inputHTML = self.get_HTML(data_object)
+        return self.create_image_auxiliary(file_path, image_name, inputHTML)
 
 
-    def create_image_auxiliary(self, filePath, imageName, inputHTML):
-        html = inputHTML
+    def create_image_auxiliary(self, file_path, image_name, input_HTML):
+        html = input_HTML
         css = "body {background-color: white; font-family: Arial, Helvetica, sans-serif;}"
-        hti = Html2Image(output_path=filePath)
-        paths = hti.screenshot(html_str=html, css_str=css, save_as=imageName)
+        hti = Html2Image(output_path=file_path)
+        paths = hti.screenshot(html_str=html, css_str=css, save_as=image_name)
         print(paths)
         return True
 
-    def get_HTML(self, dataObject):
+    def get_HTML(self, data_object):
         html = """<!DOCTYPE html>
         <html>
         <style>
@@ -27,7 +27,7 @@ class ImageCreationManager:
           </style>
         <body>
           <div class="row" style = "height: 10vh; background-color: white; border: 2px solid black">
-            <div style = "position: relative; text-align: center; top: 3vh; font-size: 50px; font-weight: bold; ">""" + str(dataObject['Name']) + """</div>
+            <div style = "position: relative; text-align: center; top: 3vh; font-size: 50px; font-weight: bold; ">""" + str(data_object['Name']) + """</div>
           </div>
           <div class="row" style = "height: 12vh; background-color: white; border: 2px solid black; border-top-width: 0px;">
             <div style = "border-right: 2px solid black;  height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>Monday</p></div>
@@ -39,75 +39,75 @@ class ImageCreationManager:
             <div style = "height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>Sunday</p></div>
           </div>
           <div class="row" style = "height: 12vh; background-color: white; border: 2px solid black; border-top-width: 0px;">
-            <div style = "border-right: 2px solid black;  height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date0']) + """</p></div>
-            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date1']) + """<p></div>
-            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.25%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date2']) + """</p></div>
-            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date3']) + """</p></div>
-            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date4']) + """</p></div>
-            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date5']) + """</p></div>
-            <div style = "height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(dataObject['date6']) + """</p></div>
+            <div style = "border-right: 2px solid black;  height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date0']) + """</p></div>
+            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date1']) + """<p></div>
+            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.25%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date2']) + """</p></div>
+            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date3']) + """</p></div>
+            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date4']) + """</p></div>
+            <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date5']) + """</p></div>
+            <div style = "height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-weight: bold; font-size: 40px;"><p>""" + str(data_object['date6']) + """</p></div>
           </div>
     
           <div class="row" style = "height: 12vh; background-color: white; border: 2px solid black; border-top-width: 0px;">
             <div style = "border-right: 2px solid black;  height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start0']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end0']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start0']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end0']) + """</p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start1']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end1']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start1']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end1']) + """</p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.25%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start2']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end2']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start2']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end2']) + """</p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start3']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end3']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start3']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end3']) + """</p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start4']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end4']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start4']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end4']) + """</p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start5']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end5']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start5']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end5']) + """</p></div>
             </div>
             <div style = "height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['start6']) + """</p></div>
-              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(dataObject['end6']) + """</p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['start6']) + """</p></div>
+              <div style = "float:left; width: 48%; height: 100%; position: relative; padding-top: 0;"><p>""" + str(data_object['end6']) + """</p></div>
             </div>
           </div>
     
     
           <div class="row" style = "height: 12vh; background-color: white; border: 2px solid black; border-top-width: 0px;">
             <div style = "border-right: 2px solid black;  height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0; "><p>""" + str(dataObject['hours0']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD0']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0; "><p>""" + str(data_object['hours0']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD0']) + """</b></p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center; font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours1']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD1']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours1']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD1']) + """</b></p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.25%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours2']) + """</p></div>
-              <div style = "float:left; width: 51.26%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD2']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours2']) + """</p></div>
+              <div style = "float:left; width: 51.26%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD2']) + """</b></p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours3']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD3']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours3']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD3']) + """</b></p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours4']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD4']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours4']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD4']) + """</b></p></div>
             </div>
             <div style = "border-right: 2px solid black; height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours5']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(dataObject['CD5']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours5']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding-top: 0;background-color: gray"><p><b>""" + str(data_object['CD5']) + """</b></p></div>
             </div>
             <div style = "height: 100%; position: relative; width: 14.10%;  float: left; text-align: center;  font-size: 40px;">
-              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(dataObject['hours6']) + """</p></div>
-              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding: 0;background-color: gray"><p><b>""" + str(dataObject['CD6']) + """</b></p></div>
+              <div style = "float:left; width: 48%; border-right: 2px solid black; height: 100%; position: relative; padding: 0;"><p>""" + str(data_object['hours6']) + """</p></div>
+              <div style = "float:left; width: 51.2%; height: 100%; position: relative; padding: 0;background-color: gray"><p><b>""" + str(data_object['CD6']) + """</b></p></div>
             </div>
           </div>
         </body>
@@ -115,7 +115,7 @@ class ImageCreationManager:
         """
         return html
 
-dataObject = {"Name": "Bob",
+dataObject = {"Name": "Nethbunny",
               "date0": "14-Nov-22",
                 "date1": "15-Nov-22",
                 "date2": "16-Nov-22",
@@ -154,6 +154,6 @@ dataObject = {"Name": "Bob",
 
               }
 filePath = "Image Database"
-imageName = "the-huem2.png"
+imageName = "the-huem4.png"
 x = ImageCreationManager()
 x.create_image(dataObject, filePath, imageName)
