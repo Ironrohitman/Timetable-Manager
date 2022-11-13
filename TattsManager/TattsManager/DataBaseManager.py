@@ -1,6 +1,6 @@
 import json
 
-from TattsManager.TattsManager.ImageCreationManager import ImageCreationManager
+
 from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
 
 rohit = {"date": "2022-W03", "endTime": [None,None,None,None,None,None,None], "endTimeDate": [None,None,None,None,None,None,None], "hasCD": [False,False,False,False,False,False,False], "hoursWorked": [0,0,0,0,0,0,0], "startTime": [None,None,None,None,None,None,None], "startTimeDate": [None,None,None,None,None,None,None]}
@@ -8,7 +8,7 @@ rohit = {"date": "2022-W03", "endTime": [None,None,None,None,None,None,None], "e
 CONST_FILE_NAME = "Database.txt"
 CONST_EMPLOYEE_SHIFT = 0
 CONST_NO_YEARS = 2
-class MasterDataManager:
+class DataBaseManager:
     def __init__(self):
         self.personInfo = PersonInfoManager()
 
@@ -67,7 +67,7 @@ class MasterDataManager:
         selected_date = object[2:len(object)]
         week_object = self.getWeekObject(emp_index, selected_date)
 
-        self.test(emp_index, selected_date, original_emp_index)
+
         return week_object
 
     def writeWeek(self, json_week_object, emp_index, selected_date):
@@ -189,12 +189,7 @@ class MasterDataManager:
 
 
 
-    def test(self, emp_index, selected_date, personInfoIndex):
-        x = ImageCreationManager()
-        filePath = "Image Database"
-        imageName = "the-huem5.png"
-        dataObject = self.get_employee_data_object(emp_index, selected_date, personInfoIndex)
-        x.create_image(dataObject, filePath, imageName)
+
 
 
 

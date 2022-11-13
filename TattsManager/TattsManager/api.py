@@ -5,8 +5,7 @@ import pywhatkit
 import json
 import DataBaseManager
 import keyboard
-
-
+import SendMessageManager
 from flask import request
 
 
@@ -25,7 +24,7 @@ def open_browser():
 
 
 def getWeekFromDB(data):
-    data_manager = DataBaseManager.MasterDataManager()
+    data_manager = DataBaseManager.DataBaseManager()
     print(data)
     output_data = [data_manager.getWeekObjectJSON(data), data_manager.getName(data), data_manager.get_number_emps()]
     print(output_data)
@@ -52,7 +51,7 @@ def testfn(getData):
 
 
 def updateDataBase(output):
-    update_manager = DataBaseManager.MasterDataManager()
+    update_manager = DataBaseManager.DataBaseManager()
     print(output)
     return update_manager.writeWeek(output[0], int(output[1]), output[2])
 
@@ -67,13 +66,17 @@ def test():
 @app.route('/send', methods=['POST'])
 def sendMessage():
     output = request.get_json()
-    pywhatkit.sendwhats_image("+61402456069 ", "potat.png", "Hello i have sent this from the bunny himself")
-    keyboard.press_and_release('ctrl+w')
+    print("rab")
     print(output)
-    pywhatkit.sendwhats_image("+61402456069 ", "potat.png", "Hello i have sent this from the bunny himself")
-    keyboard.press_and_release('ctrl+w')
-    pywhatkit.sendwhatmsg_instantly("+61402456069", "Test msg.")
-    keyboard.press_and_release('ctrl+w')
+    print("rab")
+    x = SendMessageManager.SendMessageManager()
+    x.send("", output['emp_index'], output['selectedWeek'])
+
+
+
+
+
+
 
     return {}
 

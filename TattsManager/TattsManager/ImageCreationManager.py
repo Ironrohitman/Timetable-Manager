@@ -1,5 +1,6 @@
 from html2image import Html2Image
 
+from TattsManager.TattsManager.DataBaseManager import DataBaseManager
 from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
 
 
@@ -7,11 +8,18 @@ class ImageCreationManager:
 
     def __init__(self):
         self.personInfo = PersonInfoManager()
+        self.dataBaseManager = DataBaseManager()
+        self.filePath = "Image Database"
 
     def create_image(self, data_object, file_path, image_name):
         inputHTML = self.get_HTML(data_object)
         return self.create_image_auxiliary(file_path, image_name, inputHTML)
 
+    def create_employee_image(self, emp_index, selected_date):
+        adjusted_index = self.dataBaseManager.adjusted_emp_index(emp_index, 2)
+        emp_data_object = self.dataBaseManager.get_employee_data_object(adjusted_index, selected_date, emp_index)
+        image_name = 'E' + str(emp_index) + ".png"
+        return self.create_image(emp_data_object, self.filePath,image_name)
 
     def create_image_auxiliary(self, file_path, image_name, input_HTML):
         html = input_HTML
@@ -158,7 +166,3 @@ dataObject = {"Name": "Nethbunny",
                 "CD6": ""
 
               }
-filePath = "Image Database"
-imageName = "the-huem4.png"
-x = ImageCreationManager()
-x.create_image(dataObject, filePath, imageName)
