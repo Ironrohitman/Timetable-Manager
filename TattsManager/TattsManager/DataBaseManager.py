@@ -50,7 +50,7 @@ class MasterDataManager:
         emp_week_object = json.loads(emp_data[date_index])
         print("bundo")
         print(emp_week_object)
-
+        print(self.get_number_emps())
         return emp_week_object
 
     def getWeekObjectJSON(self, object):
@@ -66,7 +66,7 @@ class MasterDataManager:
         selected_date = object[2:len(object)]
         week_object = self.getWeekObject(emp_index, selected_date)
 
-        #self.test(emp_index, selected_date)
+        self.test(emp_index, selected_date)
         return week_object
 
     def writeWeek(self, json_week_object, emp_index, selected_date):
@@ -171,6 +171,20 @@ class MasterDataManager:
                 else:
                     output += char
         return output
+
+    def get_number_emps(self):
+        lines = self.readData()
+        first_line = lines[0]
+        output = ""
+        counter = 0
+        for char in first_line:
+            if char == " ":
+                counter = counter + 1
+            elif counter == 2:
+                output+= char
+        return int(output)
+
+
 
     def test(self, emp_index, selected_date):
         x = ImageCreationManager()

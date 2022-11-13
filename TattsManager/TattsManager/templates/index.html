@@ -1152,6 +1152,7 @@ class ChangeWeekInfo{
             let name = text[1]
 
             localStorage.setItem(69, JSON.stringify(text[0]));
+            localStorage.setItem('empSize', text[2])
             instance.getDataAux(localStorage.getItem(69));
             instance.updateTitle(name);
             instance.resetCurrentDay()
@@ -1475,15 +1476,23 @@ class ChangeCurrentEmployee{
   constructor(currentWeek){
     this.currentWeek = currentWeek;
   }
+
+  getItemLS(key){
+    let item = localStorage.getItem(key);
+    return JSON.parse(item)
+  }
   incrementIndex(){
-    let currentIndex = localStorage.getItem("empIndex");
-    currentIndex = (currentIndex+1)%3
+    let currentIndex = this.getItemLS("empIndex");
+    let emps = (this.getItemLS("empSize"))
+    currentIndex = (currentIndex+1)%emps
+
     localStorage.setItem("empIndex", currentIndex);
   }
 
   decrementIndex(){
-    let currentIndex = localStorage.getItem("empIndex");
-    currentIndex = (3+currentIndex-1)%3
+    let currentIndex = this.getItemLS("empIndex");
+    let emps = (this.getItemLS("empSize"))
+    currentIndex = (emps+currentIndex-1)%emps
 
     localStorage.setItem("empIndex", currentIndex);
   }
