@@ -1,7 +1,12 @@
 from html2image import Html2Image
 
+from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
+
+
 class ImageCreationManager:
 
+    def __init__(self):
+        self.personInfo = PersonInfoManager()
 
     def create_image(self, data_object, file_path, image_name):
         inputHTML = self.get_HTML(data_object)
