@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  body, html {
+    border: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: ;
+    color: #9D9DA1;
+    font-family:  'Lato', sans-serif;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#sidebar{
+  background-color: white;
+  height: 100vh;
+  width: 13.5%;
+box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+z-index: 0;
+border-radius: 10px;
+
+}
+
+#settingsRef{
+  bottom: 15%;
+  position: absolute;
+  left: 1%;
+
+}
+
+#mainBody{
+  background-color: #FAFBFB;
+
+
+  height: 100vh;
+  width: 86%;
+  z-index: -1;
+  left: 14%;
+  position: absolute;
+
+
+
+}
+
+
+
+#nextDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#previousDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#sendIcon {
+
+      transition: 1s;
+    }
+
+#sendIcon:hover {
+      width: 60%;
+
+    }
+
+    .square_btn {
+      display: inline-block;
+      padding: 7px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      color: #59BC0A;
+
+      transition: .4s;
+      height: 30px;
+      width: 200px;
+      text-align: center;
+      vertical-align: middle;
+      padding-top: 15px;
+      font-family: Arial;
+      background-color: #E2D922;
+      font-size: 20px;
+
+
+
+    }
+
+    .square_btn:hover {
+      color: #E2D922;
+      background-color: #59BC0A;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 25%;
+      height: 65%;
+      border-radius: 15px;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .dot:hover {
+      cursor: pointer;
+    }
+
+    #resetDayRef:hover{
+      background-color: black;
+    }
+
+</style>
+
+<body>
+  <div class="row">
+
+
+    <div class="column" id = "sidebar">
+
+      <div id = "topIcon" style = "padding-top: 2vh;">
+            <i class="material-icons" style = "position: absolute; padding: 4.5vh; display: inline-block; left: 3%; color: black; font-size: 8vh;"><span class="material-symbols-outlined">edit_calendar</span></i>
+
+      </div>
+
+      <div id = "individualRef" style = "padding-top: 15vh; ">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">person</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Individual</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh; color: #C98FFF;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">group</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Group</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">manage</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Profiles</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">summarize</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh; "><b>Summary</b></p>
+      </div>
+
+
+
+      <div>
+
+      </div>
+
+      <div>
+
+      </div>
+
+      <div id = "settingsRef">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block;">settings</i>
+            <p style = "position: absolute; left: 8vh;  font-size: 2.6vh;"><b>Settings</b></p>
+      </div>
+
+    </div>
+
+    <div id = "mainBody" style = "z-index: 100;">
+      <div id = "topBar" style = "float: left; background-color: red; width: 75%;">
+        <div class = "column" id = "currentPersonRef" style = "height: 10%; top: 0%; position: absolute;">
+          <h1 style = "left: 5%; position: absolute; color: black;">Group Timetable</h1>
+        </div>
+
+
+        <div id = "groupTimeTableRef"style = "height: 83%; background-color: white; top: 15%; position: absolute; left: 2%; width: 85%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+          <div class = "column" id = "currentPersonRef" style = "height: 10%; top: 0%; position: absolute;">
+            <h3 style = "left: 10%; top: 10%; position: absolute; color: gray;">Dec 5th - 11nd</h3>
+          </div>
+          <div style = "left: 41%; position: absolute; top: 5%; color: #DEDEDE;">
+            <input type="week" id="selectedWeekRef" name="week" style = "color: #898786;">
+          </div>
+
+          <div style = "width: 100%; background-color: white; border-radius: 10px; top: 5%;  ">
+
+              <br>
+              <br>
+             </div>
+
+            <div class = "column" style = "width: 12.5%; font-size: 12px; color: white; ">x</div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #BD79F7; left: 1%; font-weight: bold" id = "(0)">Mon <a id = "(num, 0)">10</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; left: 0%;" id = "(1)">Tue <a id = "(num, 1)">11</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; left: 0%;" id = "(2)">Wed <a id = "(num, 2)">12</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; left: 0%;" id = "(3)">Thu <a id = "(num, 3)">13</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; right: 1%;" id = "(4)">Fri <a id = "(num, 4)">14</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; right: 1%;" id = "(5)">Sat <a id = "(num, 5)">15</a></div>
+            <div class = "column" style = "width: 12.5%; font-size: 12px; top: 6.5%; position: relative; color: #616161; right: 1%;" id = "(6)">Sun <a id = "(num, 6)">16</a></div>
+
+            <div style = "left: 1%; position: relative;">
+              <div class = "column" style = "width: 6%; padding-top:6%; font-size: 1.5vh; vertical-align: middle; ">
+                  <div style = "height: 4.5vh; padding-left: 25%;  ">08 am </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">09 am </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">10 am </div>
+                  <div style = "height: 4.75vh; padding-left: 25%;">11 am </div>
+                  <div style = "height: 4.75vh; padding-left: 25%;">12 pm </div>
+                  <div style = "height: 4.75vh; padding-left: 25%;">01 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">02 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">03 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">04 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">05 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">06 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">07 pm </div>
+                  <div style = "height: 4.5vh; padding-left: 25%;">08 pm </div>
+              </div>
+
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; border-top-left-radius: 5px; background-color: #F5EBFF; position: relative; left: 0%;" id = "(0, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #F5EBFF; border-right-style: none; background-color: #F5EBFF" id = "(0, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: #EFDFFE; border-right-style: none; background-color: #EFDFFE;" id = "(0, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: #F5EBFF; border-right-style: none; border-bottom-left-radius: 5px; background-color: #F5EBFF" id = "(0, 20)"> </div>
+
+
+              </div>
+
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(1, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(1, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(1, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(1, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF; border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(2, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(2, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;  background-color: #F7F7F7;" id = "(2, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-right-style: none;" id = "(2, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(3, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(3, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(3, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(3, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(4, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(4, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(4, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(4, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-right-style: none;" id = "(4, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 8)"></div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; " id = "(5, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7;" id = "(5, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none;" id = "(5, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(5, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-right-style: none; "id = "(5, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-right-style: none; background-color: #F7F7F7; " id = "(5, 20)"> </div>
+
+
+              </div>
+              <div class = "column" style = "width: 13%; padding-top:5%; font-size: 12px;">
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; border-top-right-radius: 5px;" id = "(6, 8)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 9)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white;" id = "(6, 10)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 11)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; " id = "(6, 12)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7;" id = "(6, 13)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; " id = "(6, 14)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7;" id = "(6, 15)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; " id = "(6, 16)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 17)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white;" id = "(6, 18)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; border-bottom-style: none; color: white; background-color: #F7F7F7; " id = "(6, 19)"> </div>
+                  <div style = "border-style: groove; border: 1px solid #D0D0CF;  border-width: 1px; height: 4.5vh; color: white; border-bottom-right-radius:5px;" id = "(6, 20)"> </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+</body>

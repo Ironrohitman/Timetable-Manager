@@ -7,6 +7,7 @@ import DataBaseManager
 import keyboard
 import SendMessageManager
 from flask import request
+from flask import Flask, request, url_for, redirect, render_template
 
 
 app = Flask(__name__)
@@ -93,6 +94,18 @@ def background_process_test():
     pywhatkit.sendwhats_image("+61402456069 ", "rotato.png", "Hello i have sent this from the bunny himself")
     print("Hello")
     return("nothing")
+
+@app.route('/cool_form', methods=['GET', 'POST'])
+def cool_form():
+    if request.method == 'POST':
+        # do stuff when the form is submitted
+
+        # redirect to end the POST handling
+        # the redirect can be to the same route or somewhere else
+        return redirect(url_for('index'))
+
+    # show the form, it wasn't submitted
+    return render_template('group.html')
 
 if __name__ == '__main__':
     Timer(1, open_browser).start()

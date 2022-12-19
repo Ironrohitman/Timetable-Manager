@@ -5,19 +5,20 @@ from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
 
 rohit = {"date": "2022-W03", "endTime": [None,None,None,None,None,None,None], "endTimeDate": [None,None,None,None,None,None,None], "hasCD": [False,False,False,False,False,False,False], "hoursWorked": [0,0,0,0,0,0,0], "startTime": [None,None,None,None,None,None,None], "startTimeDate": [None,None,None,None,None,None,None]}
 
-CONST_FILE_NAME = "Database.txt"
+CONST_FILE_NAME = "Database"
 CONST_EMPLOYEE_SHIFT = 0
 CONST_NO_YEARS = 2
+CONST_NUM_EMP_SHIFT = 1
 class DataBaseManager:
     def __init__(self):
         self.personInfo = PersonInfoManager()
 
     def adjusted_emp_index(self, emp_index, selected_year):
-        return emp_index*CONST_NO_YEARS + emp_index + selected_year
+        return emp_index*CONST_NO_YEARS + emp_index + selected_year + CONST_NUM_EMP_SHIFT
 
 
     def readData(self):
-        f = open("Database.txt", "r")
+        f = open("Database", "r")
         lines = f.read().splitlines()
 
         f.close()
@@ -25,15 +26,18 @@ class DataBaseManager:
         return lines
 
     def getName(self, object):
-        emp_index = int(object[0])
+        emp_index = int(object[0]) + CONST_NUM_EMP_SHIFT
 
-        adjusted_index = 0
-        if(emp_index != 0):
-            adjusted_index = emp_index * CONST_NO_YEARS + emp_index
+        adjusted_index = CONST_NUM_EMP_SHIFT
+        if(emp_index != CONST_NUM_EMP_SHIFT):
+            adjusted_index = (emp_index-CONST_NUM_EMP_SHIFT) * CONST_NO_YEARS + emp_index
 
 
         lines = self.readData()
         full_name = lines[adjusted_index]
+        print("-")
+        print(full_name)
+        print(adjusted_index)
         first_name = ""
         for char in full_name:
             if(char == " "):
@@ -178,14 +182,7 @@ class DataBaseManager:
     def get_number_emps(self):
         lines = self.readData()
         first_line = lines[0]
-        output = ""
-        counter = 0
-        for char in first_line:
-            if char == " ":
-                counter = counter + 1
-            elif counter == 2:
-                output+= char
-        return int(output)
+        return int(first_line)
 
 
 

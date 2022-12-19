@@ -21,6 +21,7 @@ class SendMessageManager:
         phone_number = self.personInfo.getPhoneNumber(emp_index)
         if(self.imageCreationManager.create_employee_image(emp_index, selected_date)):
             self.send_image(phone_number, image_path, caption)
+            print("heum0")
         else:
             print("Failed To Send")
 
