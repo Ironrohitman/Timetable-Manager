@@ -92,7 +92,4 @@ class AddPerson:
 
         return output
 
-x = AddPerson()
-print(x.readData("PersonInfo"))
-y = {"first_name": "robundo", "last_name": "mundo", "phone_number": "+61402456069", "salary": "21"}
-x.add_person(y)
+

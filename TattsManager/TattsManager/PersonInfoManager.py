@@ -48,6 +48,3 @@ class PersonInfoManager:
                 temp += char
 
         return temp
-x = PersonInfoManager()
-x.getFullName(2)
-x.getPhoneNumber(2)
