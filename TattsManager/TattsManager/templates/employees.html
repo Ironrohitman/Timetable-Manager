@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  body, html {
+    border: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #FAFBFB;
+    color: #9D9DA1;
+    font-family:  'Lato', sans-serif;
+
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#sidebar{
+  background-color: white;
+  height: 100vh;
+  width: 13.5%;
+box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+z-index: 0;
+border-radius: 10px;
+
+}
+
+#settingsRef{
+  bottom: 15%;
+  position: absolute;
+  left: 1%;
+
+}
+
+#mainBody{
+  background-color: #FAFBFB;
+
+
+  height: 100vh;
+  width: 86%;
+  z-index: -1;
+  left: 14%;
+  position: absolute;
+
+
+
+}
+
+
+
+
+#nextDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#previousDayRef:hover{
+  color: #C98FFF ;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#sendIcon {
+
+      transition: 1s;
+    }
+
+#sendIcon:hover {
+      width: 60%;
+
+    }
+
+    .square_btn {
+      display: inline-block;
+      padding: 7px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      color: #59BC0A;
+
+      transition: .4s;
+      height: 30px;
+      width: 200px;
+      text-align: center;
+      vertical-align: middle;
+      padding-top: 15px;
+      font-family: Arial;
+      background-color: #E2D922;
+      font-size: 20px;
+
+
+
+    }
+
+    .square_btn:hover {
+      color: #E2D922;
+      background-color: #59BC0A;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 25%;
+      height: 65%;
+      border-radius: 15px;
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaaaaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .dot:hover {
+      cursor: pointer;
+    }
+
+    #resetDayRef:hover{
+      background-color: black;
+    }
+
+    main#carousel {
+  top: 10%;
+  position: absolute;
+  grid-row: 1 / 2;
+  grid-column: 1 / 8;
+  width: 85vw;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  --items: 5;
+  --middle: 3;
+  --position: 1;
+  pointer-events: none;
+
+
+}
+
+div.item {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  position: absolute;
+  width: 30vw;
+  height: 73vh;
+  background-color: coral;
+  --r: calc(var(--position) - var(--offset));
+  --abs: max(calc(var(--r) * -1), var(--r));
+  transition: all 0.25s linear;
+  transform: rotateY(calc(-10deg * var(--r)))
+    translateX(calc(-300px * var(--r)));
+  z-index: calc((var(--position) - var(--abs)));
+  top: 7.5%;
+}
+
+div.item:nth-of-type(1) {
+  --offset: 1;
+  background-color: #7FD6C8;
+}
+div.item:nth-of-type(2) {
+  --offset: 2;
+  background-color: #7FCED6;
+}
+div.item:nth-of-type(3) {
+  --offset: 3;
+  background-color: #7FB9D6;
+}
+div.item:nth-of-type(4) {
+  --offset: 4;
+  background-color: #7FA0D6;
+}
+div.item:nth-of-type(5) {
+  --offset: 5;
+  background-color: #8A7FD6;
+}
+div.item:nth-of-type(6) {
+  --offset: 6;
+  background-color: #B87FD6;
+}
+
+input:nth-of-type(1) {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(1):checked ~ main#carousel {
+  --position: 1;
+}
+
+input:nth-of-type(2) {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(2):checked ~ main#carousel {
+  --position: 2;
+}
+
+input:nth-of-type(3) {
+  grid-column: 4 /5;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(3):checked ~ main#carousel {
+  --position: 3;
+}
+
+input:nth-of-type(4) {
+  grid-column: 5 / 6;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(4):checked ~ main#carousel {
+  --position: 4;
+}
+
+input:nth-of-type(5) {
+  grid-column: 6 / 7;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(5):checked ~ main#carousel {
+  --position: 5;
+}
+
+input:nth-of-type(6) {
+  grid-column: 7 / 8;
+  grid-row: 2 / 3;
+}
+input:nth-of-type(6):checked ~ main#carousel {
+  --position: 6;
+}
+
+input[type=text] {
+  width: 85%;
+  left: 7%;
+  position: relative;
+  padding: 12px 20px;
+
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type=text]:focus {
+  border: 2px solid #83C4FE;
+}
+
+
+
+</style>
+<body>
+<div class="column" id = "sidebar">
+
+      <div id = "topIcon" style = "padding-top: 2vh;">
+            <i class="material-icons" style = "position: absolute; padding: 4.5vh; display: inline-block; left: 3%; color: black; font-size: 8vh;"><span class="material-symbols-outlined">edit_calendar</span></i>
+
+      </div>
+
+      <div id = "individualRef" style = "padding-top: 15vh; ">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">person</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Individual</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh; color: #C98FFF;" >
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">group</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Group</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">manage</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh;  "><b>Profiles</b></p>
+      </div>
+
+      <div id = "groupRef" style = "padding-top: 8vh;">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block; left: 2.5vh;">summarize</i>
+            <p style = "position: absolute; left: 10.5vh; font-size: 2.6vh; "><b>Summary</b></p>
+      </div>
+
+
+      <div>
+
+      </div>
+
+      <div>
+
+      </div>
+
+      <div id = "settingsRef">
+            <i class="material-icons" style = "position: absolute; padding: 2vh; display: inline-block;">settings</i>
+            <p style = "position: absolute; left: 8vh;  font-size: 2.6vh;"><b>Settings</b></p>
+      </div>
+
+    </div>
+
+
+    <div class="column" id = "mainBody" style = "z-index: 0;">
+
+      <div class = "column" id = "searchBarRef" style = "height: 10%;  top: 3%; position: absolute; left: 50%; position: absolute;  width: 27%; ">
+          <div style = "position: absolute; left: 65%; background-color: #FAFBFB; width: 100%; border-radius: 10px; height: 50%; background-color: #FAFBFB; ">
+
+              <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" style = "position: absolute; height: 100%; width: 90%; border-radius: 10px; text-indent: 2%; border-color: white; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;  outline: none; border-style: solid;">
+
+
+          </div>
+
+        </div>
+
+
+      <div style = "background-color: #EC9DD9; width: 8%; height: 5%; left: 45%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+        <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Date Created</div>
+      </div>
+      <div style = "background-color: #A39DEC; width: 6%; height: 5%; left: 54%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+        <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">A-Z</div>
+      </div>
+      <div style = "background-color: #6988EF; width: 6%; height: 5%; left: 61%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+        <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Priority</div>
+      </div>
+
+      <div id = "header">
+        <div class = "column" id = "currentPersonRef" style = "height: 10%; top: 0%; position: absolute;">
+          <h1 style = "left: 5%; position: absolute; color: black;" id = "currentPersonRef">Employee Profiles</h1>
+        </div>
+      </div>
+
+
+      <div id = "cardDivRef">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div id = 'cardToggleRef' style = "color: #929493; text-align: center; background-color: transparent; position: absolute; bottom: 5%; height: 8%; width: 40%;  border-radius: 10px; left: 15%;">
+        <div style = "position: relative; top: 2vh; text-align: center; "><div id = 'pageToggleRef'><b>Page 1 of 1</b></div></div>
+        <div onclick = "rotat()" id = "pageLeftRef" onMouseOver="this.style.backgroundColor='#A5A5A5'"onMouseOut="this.style.backgroundColor='#DADADA'" style = "background-color: #DADADA; width: 4%; height: 40%; left: 60%; position: relative; bottom: 0.7vh; float: left;">
+          <i class="fa fa-angle-left" style="color: #605E5E; top: 5%; position:relative;"></i>
+        </div>
+        <div onclick = "potat()" id = "pageRightRef" onMouseOver="this.style.backgroundColor='#A5A5A5'"onMouseOut="this.style.backgroundColor='#DADADA'" style = "background-color: #DADADA; width: 4%; height: 40%; left: 60%; position: relative; bottom: 0.7vh; float: left;">
+          <i class="fa fa-angle-right" style="color: #605E5E; top: 5%; position:relative;"></i>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+      <div style = "width: 26%; height: 80%; background-color: white; position: absolute; left: 70%; top: 14%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+
+
+        <h2 style = "text-align: center; color: #646667; top: 2vh; position: relative;">New Employee</h2>
+
+
+
+        <div> <h4 style = "position: relative; left: 7.5%; top: 3vh; color: #727375;">First Name</h4></div>
+        <input id = "firstNameRef" type = "text" style = "border-radius: 5px; top: 1%;color:#727375;">
+
+        <div> <h4 style = "position: relative; left: 7.5%; top: 2vh; color: #727375;">Last Name</h4></div>
+        <input id = "lastNameRef" type = "text" style = "border-radius: 5px;">
+
+        <div> <h4 style = "position: relative; left: 7.5%; top: 2vh; color: #727375;">Phone Number</h4></div>
+        <input id = "phoneNumberRef" type = "text" style = "border-radius: 5px;">
+
+        <div> <h3 style = "position: relative;  top: 1vh; color: #727375; text-align:center; padding-bottom: 5%;">Position</h3></div>
+
+        <div style = "background-color:white; width: 50%; height: 7.5%; float:left; ">
+
+          <input id = "ownerSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect">
+          <a style = "left: 35%; position: relative; color: #727375;">Owner</a>
+        </div>
+        <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
+          <input id = "managerSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect">
+          <a style = "left: 20%; position: relative; color: #727375;">Manager</a>
+        </div>
+        <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
+          <input id = "employeeSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect">
+          <a style = "left: 35%; position: relative; color: #727375;">Employee</a>
+        </div>
+        <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
+          <input id = "otherSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect">
+          <a style = "left: 20%; position: relative; color: #727375;">Other</a>
+        </div>
+
+
+        <div style = "width: 50%; height: 14%; background-color: white; float:left; " id = "cancelPersonRef">
+          <div onMouseOver="this.style.backgroundColor='#AEAFB2'"onMouseOut="this.style.backgroundColor='#E2E3E5'"  style = " cursor: pointer; color: #727375; background-color: #E2E3E5; width: 70%; height: 40%; border-radius: 5px; left: 20%; position: relative; top: 25%; text-align: center; font-size: 1em; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;""><a style = "position: relative; top: 0.75vh; z-index: 10; ">
+            Cancel</a></div>
+        </div>
+        <div style = "width: 50%; height: 14%; background-color: white; float:left; " id = "savePersonRef" >
+          <div onMouseOver="this.style.backgroundColor='#2B5CEC'"onMouseOut="this.style.backgroundColor='#6988EF'"  style = " cursor: pointer;color: white; background-color: #6988EF; width: 70%; height: 40%; border-radius: 5px; left: 10%; position: relative; top: 25%; text-align: center; font-size: 1em; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;""><a style = "position: relative; top: 0.75vh; z-index: 10;">Save</a></div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </div>
+</body>
+
+<script>
+
+localStorage.setItem('currentPageIndex', 0)
+
+let dataBook = [{'backgroundColor': '#FFB088','top': '14', 'left': '2' },{'backgroundColor': '#A39DEC','top': '14', 'left': '24' },{'backgroundColor': '#EC9DD9','top': '14', 'left': '46'},
+{'backgroundColor': '#75A67F','top': '42', 'left': '2'},{'backgroundColor': '#8EC7D5','top': '42', 'left': '24'},{'backgroundColor': '#598CBF','top': '42', 'left': '46'}  ]
+
+let test = {'firstName': 'Rohit', 'lastName': 'Bobby', 'phoneNumber': '0402 456 069', 'salary': '69', 'position': 'Owner'}
+class AddCardAction{
+
+  constructor(dataBook){
+    this.attributes = dataBook;
+  }
+
+
+  addCard(dataObject, adjustedIndex, actualIndex){
+      let outputRef = document.getElementById("cardDivRef");
+      let newCard = this.getCard(dataObject, adjustedIndex, actualIndex);
+      outputRef.innerHTML += newCard;
+  }
+
+  getCard(dataObject, adjustedIndex, actualIndex){
+      let color = this.attributes[adjustedIndex]['backgroundColor'];
+      let top = this.attributes[adjustedIndex]['top'];
+      let left = this.attributes[adjustedIndex]['left'];
+
+      let id = "empCard" + adjustedIndex.toString();
+      let actualID = "deleteCard" + actualIndex.toString();
+
+      let fullName = dataObject['firstName'] + " " + dataObject['lastName'];
+      let firstLetter = fullName.charAt(0);
+
+      let phoneNumber = dataObject['phoneNumber'];
+      let position = dataObject['position'];
+      let salary = dataObject['salary']
+
+      let output = `<div id = ${id} style = "width: 20%; height: 25%; background-color: white; position: absolute; left: ${left}%; top: ${top}%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+
+        <div id = ${'cardColor' + adjustedIndex} style = "background-color: ${color}; width: 22.5%; height: 30%; position: relative; left: 7.5%; top: 10%; border-radius: 50%; color: white; float: left; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" >
+          <div id = ${'firstLetter' + adjustedIndex} style = "position: relative; text-align:center; top: 30%; font-weight: bold; font-size: 20px;">${firstLetter}</div>
+        </div>
+
+        <div>
+          <div id = ${'fullName' + adjustedIndex} style = "position: relative; left: 13%; float: left; top: 2vh;color: #807D7D; background-color: white; width: 60%; height: 8.6vh;"><h2>${fullName}</h2></div>
+        </div>
+
+
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color:#807D7D ">
+            <i class="fa fa-phone" style="font-size:20px; position: relative; left: 2.7vw;"></i>
+        </div>
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+          <div id = ${'phoneNumber' + adjustedIndex} style = "position: relative; right: 3.8vw; bottom: 0.3vh;">
+            ${phoneNumber}
+          </div>
+        </div>
+
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
+          <i class="material-icons" style = "position: relative; left: 2.3vw; bottom: 0.7vh;">person</i>
+        </div>
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+            <div id = ${'position' + adjustedIndex} style = "position: relative; right: 3.8vw; bottom: 0.5vh;">${position}</div>
+        </div>
+
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
+          <i class="material-icons" style = "position: relative; left: 2.3vw; bottom: 0.5vh;">payment</i>
+        </div>
+        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+          <div id = ${'salary' + adjustedIndex} style = "position: relative; right: 4vw; bottom: 0.5vh;">$${27} per hour</div>
+        </div>
+
+        <i onclick = 'deleteCard(${actualIndex})' id = ${actualID} class="material-icons" style = "position: absolute; top: 77%; left: 85%; color: #D87268; cursor: pointer">delete</i>
+
+      </div>`
+    return output;
+  }
+
+
+}
+
+
+
+class EmployeeInputManager{
+  constructor(){
+
+  }
+
+  getFirstName(){
+    let firstNameRef = document.getElementById('firstNameRef');
+    let firstName = firstNameRef.value;
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    return firstName
+  }
+
+  getLastName(){
+    let lastNameRef = document.getElementById('lastNameRef');
+    let lastName = lastNameRef.value;
+    lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1)
+    return lastName
+  }
+
+  getPhoneNumber(){
+    let phoneNumberRef = document.getElementById("phoneNumberRef")
+    let phoneNumber = phoneNumberRef.value;
+    phoneNumber = phoneNumber.slice(0,4) + " " + phoneNumber.slice(4, 7) + " " + phoneNumber.slice(7);
+    return phoneNumber
+  }
+
+  getPosition(){
+
+  }
+
+  getInputData(){
+    let firstName = this.getFirstName()
+    let lastName = this.getLastName()
+    let phoneNumber = this.getPhoneNumber()
+    let position = 'employee'
+    let output = {'firstName': firstName, 'lastName': lastName, 'phoneNumber': phoneNumber, 'position': position}
+    console.log(output)
+    this.cancelInputs();
+    return output
+  }
+
+  cancelInputs(){
+    this.clearFirstName();
+    this.clearLastName();
+    this.clearPhoneNumber();
+  }
+
+  clearFirstName(){
+    let firstNameRef = document.getElementById('firstNameRef')
+    firstNameRef.value = '';
+  }
+
+  clearLastName(){
+    let lastNameRef = document.getElementById('lastNameRef')
+    lastNameRef.value = '';
+  }
+
+  clearPhoneNumber(){
+    let phoneNumberRef = document.getElementById('phoneNumberRef')
+    phoneNumberRef.value = '';
+  }
+
+}
+
+let bun = {'firstName': 'Rohit', 'lastName': 'Bob', 'phoneNumber': '0', 'position': 'owner', 'salary': '10'}
+let hun = {'firstName': 'Neth', 'lastName': 'Botheju', 'phoneNumber': '0', 'position': 'owner', 'salary': '10'}
+
+class DeleteCardAction{
+    constructor(){
+      this.maxCards = 6;
+    }
+
+    deleteAllCards(){
+      for (let i = 0; i < this.maxCards; i++){
+        let currentCard = document.getElementById('empCard' + i.toString())
+        if(currentCard != null){
+            currentCard.remove()
+        }
+
+      }
+
+    }
+
+    updatePageOnDelete(cardIndex, empList){
+        let actualIndex = cardIndex%6;
+        alert(actualIndex)
+
+
+        while(actualIndex < 6){
+          let color = dataBook[(actualIndex+1)%6]['backgroundColor']
+          let cardColorRef = document.getElementById('cardColor' + actualIndex.toString())
+          if(cardColorRef != null){
+          cardColorRef.style.backgroundColor = color;
+
+
+        }
+        actualIndex++
+        }
+
+    }
+}
+
+class MasterCardManager{
+  constructor(employees, dataBook){
+    this.empList = [bun, bun, bun, bun, bun, bun, hun, hun, hun, hun, hun, hun, bun, hun, bun, hun];
+    this.maxCards = 6;
+    this.inputManager = new EmployeeInputManager()
+    this.cardManager = new AddCardAction(dataBook)
+    this.deleteManager = new DeleteCardAction();
+    this.currentCardIndex = this.empList.length;
+    this.currentMaxPages = 3;
+  }
+
+
+  addTheCard(data, adjustedIndex, actualIndex){
+    this.cardManager.addCard(data, adjustedIndex, actualIndex);
+
+    console.log(this.currentCardIndex)
+    console.log(this.empList.length)
+
+  }
+
+  addNewCard(){
+    this.loadPageNewAdd()
+    let data = this.inputManager.getInputData()
+    let currentIndex = this.currentCardIndex%this.maxCards;
+    this.addPerson(data);
+    this.addTheCard(data, currentIndex, this.currentCardIndex);
+    this.currentCardIndex++;
+    console.log(data)
+  }
+
+  deleteCardSelected(cardIndex){
+    alert(cardIndex)
+
+    this.empList.splice(cardIndex, 1)
+    console.log(this.empList)
+    this.deleteManager.deleteAllCards()
+    let pageNumber = this.getFromLocalStorage('currentPageIndex');
+    this.loadPage(pageNumber)
+    this.deleteManager.updatePageOnDelete(cardIndex)
+    this.currentCardIndex--
+
+
+  }
+  cancelInputs(){
+    //change into own classs
+    this.inputManager.cancelInputs()
+  }
+
+  deleteCard(cardIndex){
+
+  }
+
+  editCard(newDataObject){
+
+  }
+
+  addPerson(personObject){
+    this.empList.push(personObject);
+    this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
+  }
+
+  loadPage(pageNumber){
+    let startIndex = pageNumber*this.maxCards;
+    let endIndex = startIndex + this.maxCards;
+
+    let adjustedIndex = 0;
+
+    for(let i = startIndex; i < endIndex; i++){
+      let data = this.empList[i]
+      if(data != null){
+      this.addTheCard(data, adjustedIndex, i)
+      adjustedIndex++
+    }
+    }
+
+
+    this.updatePageToggle(pageNumber)
+    this.updateLocalStorage('currentPageIndex', pageNumber)
+
+
+
+  }
+
+
+
+  leftToggle(){
+    //redo
+
+    let pageIndex = this.getFromLocalStorage('currentPageIndex');
+
+    if(pageIndex > 0){
+    pageIndex--
+    }
+
+    this.deleteManager.deleteAllCards()
+    this.loadPage(pageIndex)
+
+    this.updateLocalStorage('currentPageIndex', pageIndex)
+  }
+
+  rightToggle(){
+    //redo
+
+
+    let pageIndex = this.getFromLocalStorage('currentPageIndex');
+
+    if(pageIndex < this.currentMaxPages-1){
+    pageIndex++
+    }
+
+
+    this.deleteManager.deleteAllCards()
+    this.loadPage(pageIndex)
+
+    this.updateLocalStorage('currentPageIndex', pageIndex)
+
+
+  }
+
+  updateLocalStorage(key, item){
+    let newItem = JSON.stringify(item);
+    localStorage.setItem(key, newItem);
+
+  }
+
+  getFromLocalStorage(key){
+    let item = localStorage.getItem(key);
+    item = JSON.parse(item)
+    return item;
+  }
+
+  loadPageNewAdd(){
+    let currentIndex = this.currentCardIndex
+    let currentPageIndex = this.currentMaxPages
+    if((currentIndex)%this.maxCards == 0){
+      this.deleteManager.deleteAllCards()
+
+      this.loadPage(currentPageIndex)
+    }
+    else{
+      this.deleteManager.deleteAllCards()
+
+      this.loadPage(currentPageIndex-1)
+    }
+  }
+
+  updatePageToggle(currentPageNumber){
+    let pageToggleRef = document.getElementById('pageToggleRef');
+    let output = "Page " + (currentPageNumber + 1).toString() + " of " +  this.currentMaxPages.toString()
+    pageToggleRef.innerHTML = `<b>${output}</b>`
+  }
+
+  pageToggleOnLoad(){
+    let pageToggleRef = document.getElementById('pageToggleRef');
+    let output = 'Page 1 of ' + this.currentMaxPages.toString()
+    pageToggleRef.innerHTML = `<b>${output}</b>`
+  }
+
+  updateMaxPages(currentPageNumber){
+    let pageToggleRef = document.getElementById('pageToggleRef');
+    let output = "Page " + (currentPageNumber + 1).toString() + " of " +  (currentPageNumber + 1).toString()
+    pageToggleRef.innerHTML = `<b>${output}</b>`
+
+  }
+
+
+
+
+}
+
+
+
+
+let rotit = new AddCardAction(dataBook)
+let brohit = new DeleteCardAction();
+
+let toggleControl = new MasterCardManager([], dataBook)
+
+function potat(){
+  toggleControl.rightToggle()
+}
+
+function rotat(){
+  toggleControl.leftToggle()
+}
+
+function deleteCard(cardIndex){
+  toggleControl.deleteCardSelected(cardIndex)
+}
+
+toggleControl.loadPage(0);
+toggleControl.pageToggleOnLoad()
+
+document.getElementById("savePersonRef").addEventListener("click", function (){
+  console.log("hi")
+  toggleControl.addNewCard();
+});
+document.getElementById("cancelPersonRef").addEventListener("click", function (){
+  console.log("hi")
+  toggleControl.cancelInputs();
+
+});
+document.getElementById("pageLeftRef").addEventListener("click", function (){
+
+});
+document.getElementById("pageRightRef").addEventListener("click", function (){
+
+  //toggleControl.rightToggle()
+
+});
+</script>
+
+</html>

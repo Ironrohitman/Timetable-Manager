@@ -35,18 +35,18 @@ class EditPerson:
         self.edit_person_database(emp_index, person_info_object)
 
     def edit_person_info(self, emp_index, person_info_object):
-        person_data = self.readData("PersonInfo")
+        person_data = self.readData("../datafiles/PersonInfo")
         edited_person_data = self.get_new_person(person_info_object)
         person_data[emp_index+1] = edited_person_data
-        self.update_info(person_data, "PersonInfo")
+        self.update_info(person_data, "../datafiles/PersonInfo")
 
     def edit_person_database(self, emp_index, person_info_object):
-        person_data = self.readData("Database")
+        person_data = self.readData("../datafiles/Database")
         full_name = self.get_new_full_name(person_info_object)
         adjusted_index = self.get_adjusted_index(emp_index)
         print(adjusted_index)
         person_data[adjusted_index] = full_name
-        self.update_info(person_data, "Database")
+        self.update_info(person_data, "../datafiles/Database")
 
     def get_new_person(self, person_info_object):
         first_name = person_info_object["first_name"]

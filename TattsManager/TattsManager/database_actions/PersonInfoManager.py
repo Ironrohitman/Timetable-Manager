@@ -3,7 +3,7 @@ class PersonInfoManager:
         self.empSize = int(self.readData()[0])
 
     def readData(self):
-        f = open("PersonInfo", "r")
+        f = open("/Users/rohitvalanki/PycharmProjects/Timetable-Manager/TattsManager/TattsManager/datafiles/PersonInfo", "r")
         lines = f.read().splitlines()
 
         f.close()

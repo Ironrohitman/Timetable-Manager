@@ -1,11 +1,11 @@
 import json
 
 
-from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
+from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
 
 rohit = {"date": "2022-W03", "endTime": [None,None,None,None,None,None,None], "endTimeDate": [None,None,None,None,None,None,None], "hasCD": [False,False,False,False,False,False,False], "hoursWorked": [0,0,0,0,0,0,0], "startTime": [None,None,None,None,None,None,None], "startTimeDate": [None,None,None,None,None,None,None]}
 
-CONST_FILE_NAME = "Database"
+CONST_FILE_NAME = "/Users/rohitvalanki/PycharmProjects/Timetable-Manager/TattsManager/TattsManager/datafiles/Database"
 CONST_EMPLOYEE_SHIFT = 0
 CONST_NO_YEARS = 2
 CONST_NUM_EMP_SHIFT = 1
@@ -18,7 +18,7 @@ class DataBaseManager:
 
 
     def readData(self):
-        f = open("Database", "r")
+        f = open("/Users/rohitvalanki/PycharmProjects/Timetable-Manager/TattsManager/TattsManager/datafiles/Database", "r")
         lines = f.read().splitlines()
 
         f.close()
@@ -78,6 +78,7 @@ class DataBaseManager:
         emp_index = self.adjusted_emp_index(emp_index, 2)
         print(json_week_object)
         date_index = int(selected_date[len(selected_date) - 2:len(selected_date)]) - 1;
+        print(json_week_object)
         object_date = json_week_object['date']
 
         json_week = json.dumps(json_week_object)

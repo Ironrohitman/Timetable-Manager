@@ -1,12 +1,9 @@
-from flask import Flask, request, render_template,jsonify
+from flask import jsonify
 import webbrowser
 from threading import Timer
 import pywhatkit
-import json
-import DataBaseManager
-import keyboard
-import SendMessageManager
-from flask import request
+from TattsManager.TattsManager.database_actions import DataBaseManager
+from TattsManager.TattsManager.message_actions import SendMessageManager
 from flask import Flask, request, url_for, redirect, render_template
 
 
@@ -17,7 +14,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html')
+    return render_template('employees.html')
 
 
 def open_browser():

@@ -18,7 +18,7 @@ class AddPerson:
         self.add_person_database(person_info_object)
 
     def add_person_info(self, person_info_object):
-        person_data = self.readData("PersonInfo")
+        person_data = self.readData("../datafiles/PersonInfo")
         new_person = self.get_new_person(person_info_object)
 
         current_num_employees = int(person_data[0])
@@ -27,10 +27,10 @@ class AddPerson:
         person_data[0] = current_num_employees
         person_data.append(new_person)
         print(person_data)
-        self.update_info(person_data, "PersonInfo")
+        self.update_info(person_data, "../datafiles/PersonInfo")
 
     def add_person_database(self, person_info_object):
-        person_data = self.readData("Database")
+        person_data = self.readData("../datafiles/Database")
 
         new_person_name = self.get_new_person_database_name(person_info_object)
         person_data.append(new_person_name)
@@ -43,7 +43,7 @@ class AddPerson:
 
         person_data[0] = current_num_employees
         print(person_data)
-        self.update_info(person_data, "Database")
+        self.update_info(person_data, "../datafiles/Database")
 
     def get_new_person(self, person_info_object):
         first_name = person_info_object["first_name"]
@@ -92,4 +92,7 @@ class AddPerson:
 
         return output
 
+y = {"first_name": "Rohit", "last_name": "Valanki", "phone_number": "0402456069","salary": "21"}
 
+x = AddPerson()
+x.add_person(y)

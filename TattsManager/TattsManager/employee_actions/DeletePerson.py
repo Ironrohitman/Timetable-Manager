@@ -28,7 +28,7 @@ class DeletePerson:
         return output
 
     def delete_person(self, emp_index):
-        person_data = self.readData("PersonInfo")
+        person_data = self.readData("../datafiles/PersonInfo")
         current_emps = person_data[0]
         if(current_emps != 0):
             self.delete_person_info(emp_index)
@@ -39,7 +39,7 @@ class DeletePerson:
 
     def delete_person_info(self, emp_index):
         new_list = []
-        person_data = self.readData("PersonInfo")
+        person_data = self.readData("../datafiles/PersonInfo")
 
         current_num_emps = int(person_data[0])
         current_num_emps = current_num_emps - 1
@@ -50,12 +50,12 @@ class DeletePerson:
             if i != (emp_index + self.info_shift):
                 new_list.append(person_data[i])
 
-        self.update_info(new_list, "PersonInfo")
+        self.update_info(new_list, "../datafiles/PersonInfo")
 
 
     def delete_person_database(self, emp_index):
         new_list = []
-        person_data = self.readData("DataBase")
+        person_data = self.readData("../datafiles/Database")
 
         current_num_emps = int(person_data[0])
         current_num_emps = current_num_emps - 1
@@ -68,7 +68,8 @@ class DeletePerson:
         for i in range(len(person_data)):
             if i < start or i > end:
                 new_list.append(person_data[i])
-        self.update_info(new_list, "Database")
+        self.update_info(new_list, "../datafiles/Database")
+
 
 
 

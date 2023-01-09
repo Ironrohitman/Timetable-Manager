@@ -1,7 +1,7 @@
 from html2image import Html2Image
 
-from TattsManager.TattsManager.DataBaseManager import DataBaseManager
-from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
+from TattsManager.TattsManager.database_actions.DataBaseManager import DataBaseManager
+from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
 
 
 class ImageCreationManager:

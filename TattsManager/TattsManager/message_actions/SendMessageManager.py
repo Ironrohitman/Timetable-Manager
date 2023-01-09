@@ -1,8 +1,7 @@
-import keyboard
 import pywhatkit
 
-from TattsManager.TattsManager.ImageCreationManager import ImageCreationManager
-from TattsManager.TattsManager.PersonInfoManager import PersonInfoManager
+from TattsManager.TattsManager.image_creation.ImageCreationManager import ImageCreationManager
+from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
 
 
 class SendMessageManager:
