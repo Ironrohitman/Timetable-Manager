@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('employees.html')
+    return render_template('index.html')
 
 
 def open_browser():
