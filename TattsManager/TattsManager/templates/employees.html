@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -447,19 +448,19 @@ input[type=text]:focus {
 
         <div style = "background-color:white; width: 50%; height: 7.5%; float:left; ">
 
-          <input id = "ownerSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect">
+          <input id = "ownerSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect" value = "owner">
           <a style = "left: 35%; position: relative; color: #727375;">Owner</a>
         </div>
         <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
-          <input id = "managerSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect">
+          <input id = "managerSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect" value = "manager">
           <a style = "left: 20%; position: relative; color: #727375;">Manager</a>
         </div>
         <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
-          <input id = "employeeSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect">
+          <input id = "employeeSelectRef" type = "radio" style = "left: 30%; position: relative;" name = "positionSelect" value = "employee">
           <a style = "left: 35%; position: relative; color: #727375;">Employee</a>
         </div>
         <div style = "background-color:white; width: 50%; height: 7.5%; float:left;">
-          <input id = "otherSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect">
+          <input id = "otherSelectRef" type = "radio" style = "left: 15%; position: relative;" name = "positionSelect" value = "other">
           <a style = "left: 20%; position: relative; color: #727375;">Other</a>
         </div>
 
@@ -590,6 +591,14 @@ class EmployeeInputManager{
   }
 
   getPosition(){
+    let ele = document.getElementsByName('positionSelect');
+
+          for(let i = 0; i < ele.length; i++) {
+
+              if(ele[i].checked)
+              return ele[i].value;
+
+          }
 
   }
 
@@ -597,7 +606,7 @@ class EmployeeInputManager{
     let firstName = this.getFirstName()
     let lastName = this.getLastName()
     let phoneNumber = this.getPhoneNumber()
-    let position = 'employee'
+    let position = this.getPosition()
     let output = {'firstName': firstName, 'lastName': lastName, 'phoneNumber': phoneNumber, 'position': position}
     console.log(output)
     this.cancelInputs();
@@ -667,13 +676,13 @@ class DeleteCardAction{
 
 class MasterCardManager{
   constructor(employees, dataBook){
-    this.empList = [bun, bun, bun, bun, bun, bun, hun, hun, hun, hun, hun, hun, bun, hun, bun, hun];
+    this.empList = [];
     this.maxCards = 6;
     this.inputManager = new EmployeeInputManager()
     this.cardManager = new AddCardAction(dataBook)
     this.deleteManager = new DeleteCardAction();
     this.currentCardIndex = this.empList.length;
-    this.currentMaxPages = 3;
+    this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
   }
 
 
@@ -696,8 +705,9 @@ class MasterCardManager{
   }
 
   deleteCardSelected(cardIndex){
-    alert(cardIndex)
+    let confirmation = confirm('Are you sure you want to delete selected person?' + '\n' + '(All associated data will be erased)')
 
+    if(confirmation){
     this.empList.splice(cardIndex, 1)
     console.log(this.empList)
     this.deleteManager.deleteAllCards()
@@ -705,6 +715,7 @@ class MasterCardManager{
     this.loadPage(pageNumber)
     this.deleteManager.updatePageOnDelete(cardIndex)
     this.currentCardIndex--
+  }
 
 
   }
@@ -727,6 +738,7 @@ class MasterCardManager{
   }
 
   loadPage(pageNumber){
+
     let startIndex = pageNumber*this.maxCards;
     let endIndex = startIndex + this.maxCards;
 
@@ -748,6 +760,23 @@ class MasterCardManager{
 
   }
 
+  loadPageDatabase(){
+    let x = null
+    $.get("/getEmpData", function(data) {
+      let tempInstance = new MasterCardManager()
+       localStorage.setItem('empList', data)
+
+   })
+   let empData = JSON.parse(localStorage.getItem('empList'))
+   for(let i = 0; i < empData.length; i++){
+     this.empList.push(empData[i])
+   }
+   this.loadPage(0)
+   this.currentCardIndex = this.empList.length
+   this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
+
+
+  }
 
 
   leftToggle(){
@@ -811,6 +840,7 @@ class MasterCardManager{
     }
   }
 
+
   updatePageToggle(currentPageNumber){
     let pageToggleRef = document.getElementById('pageToggleRef');
     let output = "Page " + (currentPageNumber + 1).toString() + " of " +  this.currentMaxPages.toString()
@@ -838,10 +868,15 @@ class MasterCardManager{
 
 
 
+
 let rotit = new AddCardAction(dataBook)
 let brohit = new DeleteCardAction();
-
 let toggleControl = new MasterCardManager([], dataBook)
+
+
+
+
+
 
 function potat(){
   toggleControl.rightToggle()
@@ -855,14 +890,16 @@ function deleteCard(cardIndex){
   toggleControl.deleteCardSelected(cardIndex)
 }
 
-toggleControl.loadPage(0);
+toggleControl.loadPageDatabase(0)
 toggleControl.pageToggleOnLoad()
 
 document.getElementById("savePersonRef").addEventListener("click", function (){
+
   console.log("hi")
   toggleControl.addNewCard();
 });
 document.getElementById("cancelPersonRef").addEventListener("click", function (){
+  alert(toggleControl.empList)
   console.log("hi")
   toggleControl.cancelInputs();
 
@@ -875,6 +912,18 @@ document.getElementById("pageRightRef").addEventListener("click", function (){
   //toggleControl.rightToggle()
 
 });
+
+
+function nemoMom(){
+ $.get("/getEmpData", function(data) {
+    console.log($.parseJSON(data))
+})
+}
+
+nemoMom()
+
+
 </script>
+
 
 </html>

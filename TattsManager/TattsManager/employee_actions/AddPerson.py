@@ -50,7 +50,8 @@ class AddPerson:
         last_name = person_info_object["last_name"]
         phone_number = person_info_object["phone_number"]
         salary = person_info_object["salary"]
-        new_person = first_name + ' ' + last_name + ' ' + phone_number + ' ' + salary
+        position = person_info_object["position"]
+        new_person = first_name + ' ' + last_name + ' ' + phone_number + ' ' + salary + ' ' + position
         return new_person
 
     def update_info(self, new_person_info, file_name):
@@ -92,7 +93,7 @@ class AddPerson:
 
         return output
 
-y = {"first_name": "Rohit", "last_name": "Valanki", "phone_number": "0402456069","salary": "21"}
+y = {"first_name": "Rohit", "last_name": "Valanki", "phone_number": "0402456069","salary": "21", "position": "employee"}
 
 x = AddPerson()
 x.add_person(y)

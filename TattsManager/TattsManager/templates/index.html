@@ -4,6 +4,7 @@
 </head>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
   body, html {
     border: 0;
@@ -1139,6 +1140,7 @@ class ChangeWeekInfo{
     }
 
     getData(empIndex, selectedDate, previousDate){
+
       let data = empIndex.toString() + selectedDate;
       let output = null;
 
@@ -1166,6 +1168,21 @@ class ChangeWeekInfo{
             //po.updateDayInfo();
             return text;
         });
+    }
+
+    getEmpList(){
+      fetch()
+        .then(function (response) {
+            return response.json();
+        }).then(function (text) {
+
+            console.log('GET response:');
+            console.log(text);
+
+
+            return text;
+        });
+
     }
 
     update(){
@@ -1581,6 +1598,9 @@ function saveData() {
 
 }
 
+
+
+
 function sendMessage() {
 
 
@@ -1661,6 +1681,8 @@ let po = new ChangeWeekInfo(currentWeek)
 
 
 }
+
+
 
 
 

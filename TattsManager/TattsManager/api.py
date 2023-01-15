@@ -3,8 +3,10 @@ import webbrowser
 from threading import Timer
 import pywhatkit
 from TattsManager.TattsManager.database_actions import DataBaseManager
+from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
 from TattsManager.TattsManager.message_actions import SendMessageManager
 from flask import Flask, request, url_for, redirect, render_template
+import json
 
 
 app = Flask(__name__)
@@ -14,7 +16,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html')
+    return render_template('employees.html')
 
 
 def open_browser():
@@ -30,6 +32,7 @@ def getWeekFromDB(data):
 
 @app.route('/<getData>', methods=['GET', 'POST'])
 def testfn(getData):
+    print("nemo mom")
     if(getData[5] != "-"):
         return {}
 
@@ -46,8 +49,6 @@ def testfn(getData):
         print(request.get_json())  # parse as JSON
         return 'Sucesss', 200
 
-
-
 def updateDataBase(output):
     update_manager = DataBaseManager.DataBaseManager()
     print(output)
@@ -60,6 +61,16 @@ def test():
     updateDataBase(output)
 
     return {}
+
+@app.route('/getEmpData')
+def getEmpList():
+    personManager = PersonInfoManager()
+    empList = personManager.getEmpListJSON()
+    return empList
+
+
+
+
 
 @app.route('/send', methods=['POST'])
 def sendMessage():
