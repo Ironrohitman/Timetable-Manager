@@ -617,6 +617,7 @@ class EmployeeInputManager{
     this.clearFirstName();
     this.clearLastName();
     this.clearPhoneNumber();
+    this.clearRadioButtons();
   }
 
   clearFirstName(){
@@ -632,6 +633,15 @@ class EmployeeInputManager{
   clearPhoneNumber(){
     let phoneNumberRef = document.getElementById('phoneNumberRef')
     phoneNumberRef.value = '';
+  }
+  clearRadioButtons(){
+    let elements = document.getElementsByName("positionSelect");
+
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].type == "radio") {
+            elements[i].checked = false;
+        }
+    }
   }
 
 }
@@ -657,7 +667,7 @@ class DeleteCardAction{
 
     updatePageOnDelete(cardIndex, empList){
         let actualIndex = cardIndex%6;
-        alert(actualIndex)
+
 
 
         while(actualIndex < 6){
@@ -704,16 +714,33 @@ class MasterCardManager{
     console.log(data)
   }
 
+  deleteEmployeeDatabase(empIndex) {
+
+
+
+
+      const s = JSON.stringify(empIndex)
+
+      $.ajax({
+          url:"/delEmp",
+          type:"POST",
+          contentType: "application/json",
+          data: s});
+
+  }
+
   deleteCardSelected(cardIndex){
     let confirmation = confirm('Are you sure you want to delete selected person?' + '\n' + '(All associated data will be erased)')
 
     if(confirmation){
     this.empList.splice(cardIndex, 1)
+    alert(cardIndex)
     console.log(this.empList)
     this.deleteManager.deleteAllCards()
     let pageNumber = this.getFromLocalStorage('currentPageIndex');
     this.loadPage(pageNumber)
     this.deleteManager.updatePageOnDelete(cardIndex)
+    this.deleteEmployeeDatabase(cardIndex)
     this.currentCardIndex--
   }
 
@@ -899,7 +926,7 @@ document.getElementById("savePersonRef").addEventListener("click", function (){
   toggleControl.addNewCard();
 });
 document.getElementById("cancelPersonRef").addEventListener("click", function (){
-  alert(toggleControl.empList)
+
   console.log("hi")
   toggleControl.cancelInputs();
 
@@ -921,6 +948,7 @@ function nemoMom(){
 }
 
 nemoMom()
+
 
 
 </script>
