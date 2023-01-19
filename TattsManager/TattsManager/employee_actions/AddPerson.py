@@ -18,7 +18,7 @@ class AddPerson:
         self.add_person_database(person_info_object)
 
     def add_person_info(self, person_info_object):
-        person_data = self.readData("../datafiles/PersonInfo")
+        person_data = self.readData("/Users/rohitvalanki/PycharmProjects/Timetable-Manager-Final/TattsManager/TattsManager/datafiles/PersonInfo")
         new_person = self.get_new_person(person_info_object)
 
         current_num_employees = int(person_data[0])
@@ -27,10 +27,10 @@ class AddPerson:
         person_data[0] = current_num_employees
         person_data.append(new_person)
         print(person_data)
-        self.update_info(person_data, "../datafiles/PersonInfo")
+        self.update_info(person_data, "/Users/rohitvalanki/PycharmProjects/Timetable-Manager-Final/TattsManager/TattsManager/datafiles/PersonInfo")
 
     def add_person_database(self, person_info_object):
-        person_data = self.readData("../datafiles/Database")
+        person_data = self.readData("/Users/rohitvalanki/PycharmProjects/Timetable-Manager-Final/TattsManager/TattsManager/datafiles/Database")
 
         new_person_name = self.get_new_person_database_name(person_info_object)
         person_data.append(new_person_name)
@@ -43,17 +43,23 @@ class AddPerson:
 
         person_data[0] = current_num_employees
         print(person_data)
-        self.update_info(person_data, "../datafiles/Database")
+        self.update_info(person_data, "/Users/rohitvalanki/PycharmProjects/Timetable-Manager-Final/TattsManager/TattsManager/datafiles/Database")
 
     def get_new_person(self, person_info_object):
-        first_name = person_info_object["first_name"]
-        last_name = person_info_object["last_name"]
-        phone_number = person_info_object["phone_number"]
+        first_name = person_info_object["firstName"]
+        last_name = person_info_object["lastName"]
+        phone_number = self.format_phone_number(person_info_object["phoneNumber"])
         salary = person_info_object["salary"]
         position = person_info_object["position"]
         new_person = first_name + ' ' + last_name + ' ' + phone_number + ' ' + salary + ' ' + position
         return new_person
 
+    def format_phone_number(self, phoneNumber):
+        output = ""
+        for char in phoneNumber:
+            if char != " ":
+                output += char
+        return output
     def update_info(self, new_person_info, file_name):
         f = open(file_name, "w")
         lines = self.format_lines(new_person_info)
@@ -61,8 +67,8 @@ class AddPerson:
         f.close()
 
     def get_new_person_database_name(self, person_info_object):
-        first_name = person_info_object['first_name']
-        last_name = person_info_object['last_name']
+        first_name = person_info_object['firstName']
+        last_name = person_info_object['lastName']
         output = first_name + ' ' + last_name
         return output
 
@@ -93,7 +99,6 @@ class AddPerson:
 
         return output
 
-y = {"first_name": "Rohit", "last_name": "Valanki", "phone_number": "0402456069","salary": "21", "position": "employee"}
 
-x = AddPerson()
-x.add_person(y)
+
+

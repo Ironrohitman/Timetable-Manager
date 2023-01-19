@@ -64,6 +64,3 @@ class EditPerson:
         return output
 
 
-x = EditPerson()
-y = {"first_name": "BunnyFunny", "last_name": "NemoMom", "phone_number": "0402456069", "salary": "22"}
-x.edit_person(2, y)

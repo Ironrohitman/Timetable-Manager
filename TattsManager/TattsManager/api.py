@@ -4,6 +4,7 @@ from threading import Timer
 import pywhatkit
 from TattsManager.TattsManager.database_actions import DataBaseManager
 from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
+from TattsManager.TattsManager.employee_actions.AddPerson import AddPerson
 from TattsManager.TattsManager.employee_actions.DeletePerson import DeletePerson
 from TattsManager.TattsManager.message_actions import SendMessageManager
 from flask import Flask, request, url_for, redirect, render_template
@@ -75,11 +76,20 @@ def deleteEmployee():
 
     return {}
 
+@app.route('/addEmp', methods=['POST'])
+def addEmployee():
+    output = request.get_json()
+    print(output)
+    addEmployeeAction = AddPerson()
+    addEmployeeAction.add_person(output)
+    return {}
+
 @app.route('/getEmpData')
 def getEmpList():
     personManager = PersonInfoManager()
     empList = personManager.getEmpListJSON()
     return empList
+
 
 
 

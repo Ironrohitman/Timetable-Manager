@@ -602,12 +602,17 @@ class EmployeeInputManager{
 
   }
 
+  getSalary(){
+    return '21'
+  }
+
   getInputData(){
     let firstName = this.getFirstName()
     let lastName = this.getLastName()
     let phoneNumber = this.getPhoneNumber()
     let position = this.getPosition()
-    let output = {'firstName': firstName, 'lastName': lastName, 'phoneNumber': phoneNumber, 'position': position}
+    let salary = this.getSalary()
+    let output = {'firstName': firstName, 'lastName': lastName, 'phoneNumber': phoneNumber, 'position': position, 'salary': salary}
     console.log(output)
     this.cancelInputs();
     return output
@@ -704,6 +709,19 @@ class MasterCardManager{
 
   }
 
+  addEmployeeDatabase(empData) {
+
+
+      const s = JSON.stringify(empData)
+
+      $.ajax({
+          url:"/addEmp",
+          type:"POST",
+          contentType: "application/json",
+          data: s});
+
+  }
+
   addNewCard(){
     this.loadPageNewAdd()
     let data = this.inputManager.getInputData()
@@ -715,8 +733,6 @@ class MasterCardManager{
   }
 
   deleteEmployeeDatabase(empIndex) {
-
-
 
 
       const s = JSON.stringify(empIndex)
@@ -761,6 +777,7 @@ class MasterCardManager{
 
   addPerson(personObject){
     this.empList.push(personObject);
+    this.addEmployeeDatabase(personObject)
     this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
   }
 
