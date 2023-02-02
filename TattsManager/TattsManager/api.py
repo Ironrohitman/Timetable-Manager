@@ -6,6 +6,7 @@ from TattsManager.TattsManager.database_actions import DataBaseManager
 from TattsManager.TattsManager.database_actions.PersonInfoManager import PersonInfoManager
 from TattsManager.TattsManager.employee_actions.AddPerson import AddPerson
 from TattsManager.TattsManager.employee_actions.DeletePerson import DeletePerson
+from TattsManager.TattsManager.employee_actions.EditPerson import EditPerson
 from TattsManager.TattsManager.message_actions import SendMessageManager
 from flask import Flask, request, url_for, redirect, render_template
 import json
@@ -82,6 +83,17 @@ def addEmployee():
     print(output)
     addEmployeeAction = AddPerson()
     addEmployeeAction.add_person(output)
+    return {}
+
+@app.route('/editEmp', methods=['POST'])
+def editEmployee():
+    output = request.get_json()
+    print(69)
+    print(output)
+    editPersonAction = EditPerson()
+    editPersonAction.edit_person(output[0], output[1])
+    print(69)
+
     return {}
 
 @app.route('/getEmpData')

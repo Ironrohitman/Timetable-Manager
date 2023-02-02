@@ -92,7 +92,9 @@ class PersonInfoManager:
                 temp += emp_string[len(emp_string)-1]
                 output["position"] = temp
                 counter = counter + 1
-            temp+= char
+
+            if char != " ":
+                temp+= char
 
 
         return output

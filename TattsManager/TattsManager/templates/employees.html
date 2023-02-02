@@ -431,7 +431,7 @@ input[type=text]:focus {
       <div style = "width: 26%; height: 80%; background-color: white; position: absolute; left: 70%; top: 14%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
 
 
-        <h2 style = "text-align: center; color: #646667; top: 2vh; position: relative;">New Employee</h2>
+        <h2 style = "text-align: center; color: #646667; top: 2vh; position: relative;" id = 'empDisplay'>New Employee</h2>
 
 
 
@@ -441,8 +441,13 @@ input[type=text]:focus {
         <div> <h4 style = "position: relative; left: 7.5%; top: 2vh; color: #727375;">Last Name</h4></div>
         <input id = "lastNameRef" type = "text" style = "border-radius: 5px;">
 
-        <div> <h4 style = "position: relative; left: 7.5%; top: 2vh; color: #727375;">Phone Number</h4></div>
-        <input id = "phoneNumberRef" type = "text" style = "border-radius: 5px;">
+        <div> <h4 style = "position: relative; left: 7.5%; top: 2vh; color: #727375;">Salary&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Phone Number</h4></div>
+        <input id = "salaryRef" type = "text" style = "border-radius: 5px; width: 30%;">
+
+        <input id = "phoneNumberRef" type = "text" style = "border-radius: 5px;  width: 50%; left: 12%;">
+
+
+
 
         <div> <h3 style = "position: relative;  top: 1vh; color: #727375; text-align:center; padding-bottom: 5%;">Position</h3></div>
 
@@ -550,9 +555,10 @@ class AddCardAction{
           <i class="material-icons" style = "position: relative; left: 2.3vw; bottom: 0.5vh;">payment</i>
         </div>
         <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
-          <div id = ${'salary' + adjustedIndex} style = "position: relative; right: 4vw; bottom: 0.5vh;">$${27} per hour</div>
+          <div id = ${'salary' + adjustedIndex} style = "position: relative; right: 4vw; bottom: 0.5vh;">$${salary} per hour</div>
         </div>
 
+        <i onclick = 'editEmployee(${actualIndex})' id = ${actualID} class="material-icons" style = "position: absolute; top: 77%; left: 75%; color: #FCC886; cursor: pointer">edit</i>
         <i onclick = 'deleteCard(${actualIndex})' id = ${actualID} class="material-icons" style = "position: absolute; top: 77%; left: 85%; color: #D87268; cursor: pointer">delete</i>
 
       </div>`
@@ -603,7 +609,9 @@ class EmployeeInputManager{
   }
 
   getSalary(){
-    return '21'
+    let salaryRef = document.getElementById('salaryRef')
+    let salary = salaryRef.value;
+    return salary
   }
 
   getInputData(){
@@ -622,6 +630,7 @@ class EmployeeInputManager{
     this.clearFirstName();
     this.clearLastName();
     this.clearPhoneNumber();
+    this.clearSalary();
     this.clearRadioButtons();
   }
 
@@ -633,6 +642,11 @@ class EmployeeInputManager{
   clearLastName(){
     let lastNameRef = document.getElementById('lastNameRef')
     lastNameRef.value = '';
+  }
+
+  clearSalary(){
+    let salaryRef = document.getElementById('salaryRef')
+    salaryRef.value = '';
   }
 
   clearPhoneNumber(){
@@ -689,6 +703,80 @@ class DeleteCardAction{
     }
 }
 
+class EditPersonManager{
+  constructor(){
+    this.inputManager = new EmployeeInputManager()
+    this.currentCardIndex = null
+  }
+
+  editEmployee(empIndex, empData){
+
+    console.log(empData)
+    console.log(empIndex)
+    localStorage.setItem('isEdit', 1)
+    this.changeEditDisplay(empData)
+    this.currentCardIndex = empIndex;
+
+  }
+
+  restorePreviousState(){
+    localStorage.setItem('isEdit', 0);
+    let titleRef = document.getElementById('empDisplay')
+    titleRef.innerHTML = 'New Employee';
+
+  }
+
+  updateScreen(){
+
+  }
+
+  saveEmployeeData(){
+    let newEmpObject = this.inputManager.getInputData()
+    console.log(newEmpObject)
+    console.log(this.currentCardIndex)
+    this.editEmployeeDatabase(this.currentCardIndex, newEmpObject);
+    this.restorePreviousState()
+    alert("Edit Succesful!")
+    return [this.currentCardIndex, newEmpObject]
+  }
+
+  changeEditDisplay(empData){
+    let titleRef = document.getElementById('empDisplay')
+    titleRef.innerHTML = 'Edit Profile'
+
+
+    let firstNameRef = document.getElementById('firstNameRef')
+    firstNameRef.value = empData['firstName']
+
+    let lastNameRef = document.getElementById('lastNameRef')
+    lastNameRef.value = empData['lastName']
+
+    let phoneNumber = document.getElementById('phoneNumberRef')
+    phoneNumber.value = empData['phoneNumber']
+
+    let salaryRef = document.getElementById('salaryRef')
+    salaryRef.value = empData['salary']
+
+    let positionId = empData['position'] + 'SelectRef'
+    let positionRef = document.getElementById(positionId)
+    positionRef.checked = true;
+  }
+
+  editEmployeeDatabase(empIndex, newEmpObject){
+
+    const s = JSON.stringify([empIndex,newEmpObject])
+
+    $.ajax({
+        url:"/editEmp",
+        type:"POST",
+        contentType: "application/json",
+        data: s});
+
+  }
+}
+
+
+
 class MasterCardManager{
   constructor(employees, dataBook){
     this.empList = [];
@@ -696,10 +784,40 @@ class MasterCardManager{
     this.inputManager = new EmployeeInputManager()
     this.cardManager = new AddCardAction(dataBook)
     this.deleteManager = new DeleteCardAction();
+    this.editPersonManager = new EditPersonManager();
     this.currentCardIndex = this.empList.length;
     this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
   }
 
+  saveActions(){
+    let selectedAction = JSON.parse(localStorage.getItem('isEdit'));
+    if(selectedAction){
+      console.log("ur mom")
+      let updatedData = this.editPersonManager.saveEmployeeData()
+      this.updatedEmpList(updatedData[0], updatedData[1])
+      this.reloadPage()
+
+
+
+    }
+    else{
+      this.addNewCard()
+    }
+  }
+
+  reloadPage(){
+    let pageIndex = this.getFromLocalStorage('currentPageIndex');
+    this.deleteManager.deleteAllCards()
+    this.loadPage(pageIndex)
+  }
+  updatedEmpList(empIndex, newEmpData){
+    this.empList[empIndex] = newEmpData
+
+  }
+  editEmployee(empIndex){
+      let empData = this.empList[empIndex]
+      this.editPersonManager.editEmployee(empIndex, empData)
+  }
 
   addTheCard(data, adjustedIndex, actualIndex){
     this.cardManager.addCard(data, adjustedIndex, actualIndex);
@@ -765,6 +883,7 @@ class MasterCardManager{
   cancelInputs(){
     //change into own classs
     this.inputManager.cancelInputs()
+    this.editPersonManager.restorePreviousState()
   }
 
   deleteCard(cardIndex){
@@ -917,7 +1036,7 @@ let rotit = new AddCardAction(dataBook)
 let brohit = new DeleteCardAction();
 let toggleControl = new MasterCardManager([], dataBook)
 
-
+localStorage.setItem('isEdit', 0);
 
 
 
@@ -934,13 +1053,17 @@ function deleteCard(cardIndex){
   toggleControl.deleteCardSelected(cardIndex)
 }
 
+function editEmployee(empIndex){
+  toggleControl.editEmployee(empIndex)
+}
+
 toggleControl.loadPageDatabase(0)
 toggleControl.pageToggleOnLoad()
 
 document.getElementById("savePersonRef").addEventListener("click", function (){
 
   console.log("hi")
-  toggleControl.addNewCard();
+  toggleControl.saveActions();
 });
 document.getElementById("cancelPersonRef").addEventListener("click", function (){
 
