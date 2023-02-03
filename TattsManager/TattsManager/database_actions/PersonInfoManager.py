@@ -52,6 +52,9 @@ class PersonInfoManager:
 
         return temp
 
+    def formatPhoneNumber(self, phone_number):
+        output = phone_number[0:4] + " " + phone_number[4:7] + " " + phone_number[7:11]
+        return output
     def getEmpList(self):
         lines = self.readData()
         output = []
@@ -81,7 +84,7 @@ class PersonInfoManager:
                 temp = ""
                 counter = counter + 1
             elif counter == 2 and char == " ":
-                output["phoneNumber"] = temp
+                output["phoneNumber"] = self.formatPhoneNumber(temp)
                 temp = ""
                 counter = counter + 1
             elif counter == 3 and char == " ":

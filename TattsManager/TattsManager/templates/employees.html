@@ -531,30 +531,30 @@ class AddCardAction{
         </div>
 
         <div>
-          <div id = ${'fullName' + adjustedIndex} style = "position: relative; left: 13%; float: left; top: 2vh;color: #807D7D; background-color: white; width: 60%; height: 8.6vh;"><h2>${fullName}</h2></div>
+          <div id = ${'fullName' + adjustedIndex} style = "position: relative; left: 13%; float: left; top: 2vh;color: #807D7D; background-color: transparent; width: 60%; height: 8.6vh;"><h2>${fullName}</h2></div>
         </div>
 
 
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color:#807D7D ">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%; color:#807D7D ">
             <i class="fa fa-phone" style="font-size:20px; position: relative; left: 2.7vw;"></i>
         </div>
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
           <div id = ${'phoneNumber' + adjustedIndex} style = "position: relative; right: 3.8vw; bottom: 0.3vh;">
             ${phoneNumber}
           </div>
         </div>
 
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
           <i class="material-icons" style = "position: relative; left: 2.3vw; bottom: 0.7vh;">person</i>
         </div>
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
             <div id = ${'position' + adjustedIndex} style = "position: relative; right: 3.8vw; bottom: 0.5vh;">${position}</div>
         </div>
 
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%; color: #807D7D;">
           <i class="material-icons" style = "position: relative; left: 2.3vw; bottom: 0.5vh;">payment</i>
         </div>
-        <div style = "background-color: white; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
+        <div style = "background-color: transparent; height: 15%; float: left; position: relative; width: 50%; top: 11%;">
           <div id = ${'salary' + adjustedIndex} style = "position: relative; right: 4vw; bottom: 0.5vh;">$${salary} per hour</div>
         </div>
 
@@ -592,10 +592,23 @@ class EmployeeInputManager{
   getPhoneNumber(){
     let phoneNumberRef = document.getElementById("phoneNumberRef")
     let phoneNumber = phoneNumberRef.value;
-    phoneNumber = phoneNumber.slice(0,4) + " " + phoneNumber.slice(4, 7) + " " + phoneNumber.slice(7);
+    phoneNumber = this.formatPhoneNumber(phoneNumber)
     return phoneNumber
   }
 
+  formatPhoneNumber(phoneNumber){
+    let output = ""
+    for(let i = 0; i < phoneNumber.length; i++){
+      let char = phoneNumber[i]
+      if (char != " "){
+        output += char
+      }
+    }
+
+    let finalOutput = output.slice(0,4) + " " + output.slice(4, 7) + " " + output.slice(7);
+    return finalOutput
+
+  }
   getPosition(){
     let ele = document.getElementsByName('positionSelect');
 
@@ -812,6 +825,7 @@ class MasterCardManager{
   }
   updatedEmpList(empIndex, newEmpData){
     this.empList[empIndex] = newEmpData
+    localStorage.setItem('empList', JSON.stringify(this.empList))
 
   }
   editEmployee(empIndex){
@@ -925,11 +939,16 @@ class MasterCardManager{
 
   loadPageDatabase(){
     let x = null
-    $.get("/getEmpData", function(data) {
-      let tempInstance = new MasterCardManager()
-       localStorage.setItem('empList', data)
+    $.ajax({
+   type: "GET",
+   url: "/getEmpData",
+   async: false,
+   data: {0:0},
+   success: function(response) {
+     localStorage.setItem('empList', response)
+   x = response }
+});
 
-   })
    let empData = JSON.parse(localStorage.getItem('empList'))
    for(let i = 0; i < empData.length; i++){
      this.empList.push(empData[i])
