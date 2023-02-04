@@ -19,8 +19,11 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('employees.html')
+    return render_template('index.html')
 
+@app.route('/employees')
+def employees():
+    return render_template('employees.html')
 
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:2000/')
