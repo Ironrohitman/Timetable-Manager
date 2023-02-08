@@ -488,7 +488,8 @@ input[type=text]:focus {
         <input id = "phoneNumberRef" type = "text" style = "border-radius: 5px;  width: 50%; left: 12%;">
 
 
-
+        <div style = "background-color: white; width: 30%; height: 4%; float: left; left: 8%; position: relative; color: #F67C7C"><div id = "salaryValidationRef"></div></div>
+        <div style = "background-color: white; width: 52%; height: 4%; float: left; left: 15%; position: relative; color: #F67C7C"><div id = "phoneNumberValidationRef"></div></div>
 
         <div> <h3 style = "position: relative;  top: 1vh; color: #727375; text-align:center; padding-bottom: 5%;">Position</h3></div>
 
@@ -829,7 +830,172 @@ class EditPersonManager{
   }
 }
 
+class InputValidation{
 
+    isValidEntry(){
+
+      let validFirstName = this.isValidFirstName()
+      let validLastName = this.isValidLastName()
+      let validPostion = this.hasSelectedPosition()
+      let validSalary = this.isValidSalary()
+      let validPhoneNumber = this.isValidPhoneNumber()
+
+
+      let multiple = false
+      let output = ''
+
+      if(!validFirstName){
+        output += "Please fill out first name "
+        multiple = true
+      }
+
+      if(!validLastName){
+        if(multiple){
+          output += "and last name "
+        }
+        else{
+          output += 'Please fill out last name '
+        }
+        multiple = true
+      }
+
+      if (!validPostion){
+        if(multiple){
+          output += "and select position!"
+        }
+        else{
+          output += "Please select position!"
+        }
+      }
+
+
+      if(!(output == '')){
+        alert(output)
+      }
+
+      return (validFirstName && validLastName && validPostion && validSalary && validPhoneNumber)
+    }
+
+    isValidFirstName(){
+      let firstName = document.getElementById('firstNameRef').value
+      return !(firstName.length == 0)
+    }
+
+    isValidLastName(){
+      let lastName = document.getElementById('lastNameRef').value
+      return !(lastName.length == 0)
+    }
+
+    hasSelectedPosition(){
+      let ele = document.getElementsByName('positionSelect');
+      let isSelected = false
+            for(let i = 0; i < ele.length; i++) {
+
+                if(ele[i].checked)
+                isSelected = true
+
+            }
+        return isSelected;
+    }
+
+    isValidSalary(){
+      let salary = document.getElementById('salaryRef').value
+      salary = parseInt(salary)
+
+      if (salary < 0 || isNaN(salary)){
+        this.invalidSalary()
+        return false
+      }
+      else{
+        this.resetSalary()
+        return true
+      }
+    }
+
+    isValidPhoneNumber(){
+      let phoneNumber =document.getElementById('phoneNumberRef').value
+      let regex = /^\(?(\d{2})\)?[\s-]?\d{4}[\s-]?\d{4}$/;
+
+
+      if (!regex.test(phoneNumber)) {
+        this.invalidPhoneNumber()
+        return false
+      }
+      else{
+        this.resetPhoneNumber()
+        return true
+      }
+
+    }
+
+    invalidPhoneNumber(){
+      this.updatePhoneNumberText()
+      this.updatePhoneNumberColour()
+    }
+
+    invalidSalary(){
+      this.updateSalaryText()
+      this.updateSalaryColour()
+    }
+
+    resetPhoneNumber(){
+      this.resetPhoneNumberText()
+      this.resetPhoneNumberColour()
+    }
+
+    resetSalary(){
+      this.resetSalaryText()
+      this.resetSalaryColour()
+    }
+
+    updatePhoneNumberText(){
+      let phoneValidationRef = document.getElementById("phoneNumberValidationRef")
+      phoneValidationRef.innerHTML = "Enter valid phone number"
+    }
+
+    updatePhoneNumberColour(){
+      let phoneNumberInputRef = document.getElementById('phoneNumberRef')
+      phoneNumberInputRef.style.backgroundColor = "#FCE3E3"
+      phoneNumberInputRef.style.borderColor = "#E97878"
+
+    }
+
+    updateSalaryText(){
+      let salaryValidationRef = document.getElementById("salaryValidationRef")
+      salaryValidationRef.innerHTML = "Enter valid salary"
+    }
+
+    updateSalaryColour(){
+      let salaryInputRef = document.getElementById('salaryRef')
+      salaryInputRef.style.backgroundColor = "#FCE3E3"
+      salaryInputRef.style.borderColor = "#E97878"
+    }
+
+    resetPhoneNumberText(){
+      let phoneValidationRef = document.getElementById("phoneNumberValidationRef")
+      phoneValidationRef.innerHTML = ""
+    }
+
+    resetPhoneNumberColour(){
+      let phoneNumberInputRef = document.getElementById('phoneNumberRef')
+      phoneNumberInputRef.style.backgroundColor = "white"
+      phoneNumberInputRef.style.borderColor = null;
+    }
+
+    resetSalaryText(){
+      let salaryValidationRef = document.getElementById("salaryValidationRef")
+      salaryValidationRef.innerHTML = ""
+    }
+
+    resetSalaryColour(){
+      let salaryInputRef = document.getElementById('salaryRef')
+      salaryInputRef.style.backgroundColor = "white"
+      salaryInputRef.style.borderColor = null;
+    }
+
+
+
+}
 
 class MasterCardManager{
   constructor(employees, dataBook){
@@ -841,22 +1007,27 @@ class MasterCardManager{
     this.editPersonManager = new EditPersonManager();
     this.currentCardIndex = this.empList.length;
     this.currentMaxPages = Math.ceil(this.empList.length/this.maxCards);
+    this.inputValidation = new InputValidation()
   }
 
   saveActions(){
     let selectedAction = JSON.parse(localStorage.getItem('isEdit'));
-    if(selectedAction){
-      console.log("ur mom")
-      let updatedData = this.editPersonManager.saveEmployeeData()
-      this.updatedEmpList(updatedData[0], updatedData[1])
-      this.reloadPage()
+    let isValidEntry = this.inputValidation.isValidEntry()
+
+    if(isValidEntry){
+      if(selectedAction){
+        console.log("ur mom")
+        let updatedData = this.editPersonManager.saveEmployeeData()
+        this.updatedEmpList(updatedData[0], updatedData[1])
+        this.reloadPage()
 
 
 
-    }
-    else{
-      this.addNewCard()
-    }
+      }
+      else{
+        this.addNewCard()
+      }
+  }
   }
 
   reloadPage(){
@@ -1090,6 +1261,10 @@ class MasterCardManager{
 
 
 
+let x = new InputValidation()
+
+
+
 
 
 let rotit = new AddCardAction(dataBook)
@@ -1120,7 +1295,9 @@ function editEmployee(empIndex){
 toggleControl.loadPageDatabase(0)
 toggleControl.pageToggleOnLoad()
 
+
 document.getElementById("savePersonRef").addEventListener("click", function (){
+
 
   console.log("hi")
   toggleControl.saveActions();
@@ -1138,6 +1315,14 @@ document.getElementById("pageRightRef").addEventListener("click", function (){
 
   //toggleControl.rightToggle()
 
+});
+
+document.getElementById("salaryRef").addEventListener("blur", function() {
+  x.isValidSalary()
+});
+
+document.getElementById("phoneNumberRef").addEventListener("blur", function() {
+  x.isValidPhoneNumber()
 });
 
 
