@@ -762,15 +762,19 @@ class EditPersonManager{
   constructor(){
     this.inputManager = new EmployeeInputManager()
     this.currentCardIndex = null
+    this.inputValidation = new InputValidation()
   }
 
   editEmployee(empIndex, empData){
+    this.inputValidation.resetSalary()
+    this.inputValidation.resetPhoneNumber()
 
     console.log(empData)
     console.log(empIndex)
     localStorage.setItem('isEdit', 1)
     this.changeEditDisplay(empData)
     this.currentCardIndex = empIndex;
+
 
   }
 
@@ -807,7 +811,7 @@ class EditPersonManager{
     lastNameRef.value = empData['lastName']
 
     let phoneNumber = document.getElementById('phoneNumberRef')
-    phoneNumber.value = empData['phoneNumber']
+    phoneNumber.value = this.getFormattedPhoneNumber(empData['phoneNumber'])
 
     let salaryRef = document.getElementById('salaryRef')
     salaryRef.value = empData['salary']
@@ -815,6 +819,19 @@ class EditPersonManager{
     let positionId = empData['position'] + 'SelectRef'
     let positionRef = document.getElementById(positionId)
     positionRef.checked = true;
+  }
+
+  getFormattedPhoneNumber(phoneNumber){
+    let output = ""
+    for(let i = 0; i < phoneNumber.length; i++){
+      let char = phoneNumber[i]
+      if(char != " "){
+        output += char
+      }
+    }
+
+    return output
+
   }
 
   editEmployeeDatabase(empIndex, newEmpObject){
@@ -1110,6 +1127,8 @@ class MasterCardManager{
     //change into own classs
     this.inputManager.cancelInputs()
     this.editPersonManager.restorePreviousState()
+    this.inputValidation.resetSalary()
+    this.inputValidation.resetPhoneNumber()
   }
 
   deleteCard(cardIndex){
@@ -1292,7 +1311,7 @@ function editEmployee(empIndex){
   toggleControl.editEmployee(empIndex)
 }
 
-//toggleControl.loadPageDatabase(0)
+toggleControl.loadPageDatabase(0)
 toggleControl.pageToggleOnLoad()
 
 
