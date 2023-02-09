@@ -403,13 +403,13 @@ input[type=text]:focus {
         </div>
 
 
-      <div style = "background-color: #EC9DD9; width: 8%; height: 5%; left: 45%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+      <div id = 'dateSort' style = "background-color: #EC9DD9; width: 8%; height: 5%; left: 45%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
         <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Date Created</div>
       </div>
-      <div style = "background-color: #A39DEC; width: 6%; height: 5%; left: 54%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
-        <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">A-Z</div>
+      <div onMouseOver="this.style.backgroundColor='#746AEE'; this.style.color = '#F9F9FB'"onMouseOut="this.style.backgroundColor='#A39DEC'; this.style.color ='white'" id = 'alphaSort' style = "background-color: #A39DEC; width: 6%; height: 5%; left: 54%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+        <div  style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">A-Z</div>
       </div>
-      <div style = "background-color: #6988EF; width: 6%; height: 5%; left: 61%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+      <div id = 'prioritySort' style = "background-color: #6988EF; width: 6%; height: 5%; left: 61%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
         <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Priority</div>
       </div>
 
@@ -566,7 +566,7 @@ class AddCardAction{
       let position = dataObject['position'];
       let salary = dataObject['salary']
 
-      let output = `<div id = ${id} style = "width: 20%; height: 25%; background-color: white; position: absolute; left: ${left}%; top: ${top}%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
+      let output = `<div id = ${id} style = " width: 20%; height: 25%; background-color: white; position: absolute; left: ${left}%; top: ${top}%; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 10px;">
 
         <div id = ${'cardColor' + adjustedIndex} style = "background-color: ${color}; width: 22.5%; height: 30%; position: relative; left: 7.5%; top: 10%; border-radius: 50%; color: white; float: left; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;" >
           <div id = ${'firstLetter' + adjustedIndex} style = "position: relative; text-align:center; top: 30%; font-weight: bold; font-size: 20px;">${firstLetter}</div>
@@ -1027,6 +1027,74 @@ class MasterCardManager{
     this.inputValidation = new InputValidation()
   }
 
+  fadeOutEffect(){
+
+    for(let i = 0; i < this.empList.length; i++){
+      document.getElementById('empCard' + i.toString()).style.transition = '1s'
+      document.getElementById('empCard' + i.toString()).style.opacity = '0'
+      setTimeout(function(){document.getElementById('empCard' + i.toString()).style.opacity = '1'}, 0)
+    }
+  }
+
+  individualFadeOutEffect(index){
+    document.getElementById('empCard' + index.toString()).style.transition = '1s'
+    document.getElementById('empCard' + index.toString()).style.opacity = '0'
+    setTimeout(function(){document.getElementById('empCard' + index.toString()).style.opacity = '1'}, 0)
+  }
+
+  sortAlphabetically(){
+    let outputIndexes = []
+    for(let i = 0; i < this.empList.length; i++){
+      outputIndexes.push([this.empList[i]['firstName'], this.empList[i]])
+    }
+    outputIndexes.sort()
+
+    for(let i = 0; i < this.empList.length; i++){
+      this.empList[i] = outputIndexes[i][1]
+    }
+    this.deleteManager.deleteAllCards()
+    this.loadPage(0)
+
+  }
+
+  sortByPriority(){
+    let outputIndexes = []
+    for(let i = 0; i < this.empList.length; i++){
+      let priority = null
+      let position = this.empList[i]['position']
+
+      switch(position){
+        case 'owner':
+          priority = 0
+          break;
+        case 'manager':
+          priority = 1
+          break;
+        case 'employee':
+          priority = 2
+          break;
+        case 'other':
+          priority = 3
+          break;
+        default:
+          priority = 5;
+      }
+      outputIndexes.push([priority, this.empList[i]])
+    }
+
+    outputIndexes.sort()
+
+    for(let i = 0; i < this.empList.length; i++){
+      this.empList[i] = outputIndexes[i][1]
+    }
+    this.deleteManager.deleteAllCards()
+    this.loadPage(0)
+  }
+
+  sortByDateCreated(){
+    this.loadPageDatabase()
+  }
+
   saveActions(){
     let selectedAction = JSON.parse(localStorage.getItem('isEdit'));
     let isValidEntry = this.inputValidation.isValidEntry()
@@ -1042,7 +1110,8 @@ class MasterCardManager{
 
       }
       else{
-        this.addNewCard()
+        let index = this.addNewCard()
+        this.individualFadeOutEffect(index)
       }
   }
   }
@@ -1068,6 +1137,7 @@ class MasterCardManager{
     console.log(this.currentCardIndex)
     console.log(this.empList.length)
 
+
   }
 
   addEmployeeDatabase(empData) {
@@ -1091,6 +1161,7 @@ class MasterCardManager{
     this.addTheCard(data, currentIndex, this.currentCardIndex);
     this.currentCardIndex++;
     console.log(data)
+    return currentIndex
   }
 
   deleteEmployeeDatabase(empIndex) {
@@ -1343,6 +1414,21 @@ document.getElementById("salaryRef").addEventListener("blur", function() {
 document.getElementById("phoneNumberRef").addEventListener("blur", function() {
   x.isValidPhoneNumber()
 });
+
+document.getElementById("alphaSort").addEventListener("click", function() {
+  toggleControl.sortAlphabetically()
+});
+
+document.getElementById("dateSort").addEventListener("click", function() {
+  toggleControl.sortByDateCreated()
+});
+
+document.getElementById("prioritySort").addEventListener("click", function() {
+  toggleControl.sortByPriority()
+
+});
+
+toggleControl.fadeOutEffect()
 
 
 function nemoMom(){
