@@ -406,10 +406,10 @@ input[type=text]:focus {
       <div id = 'dateSort' style = "background-color: #EC9DD9; width: 8%; height: 5%; left: 45%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
         <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Date Created</div>
       </div>
-      <div onMouseOver="this.style.backgroundColor='#746AEE'; this.style.color = '#F9F9FB'"onMouseOut="this.style.backgroundColor='#A39DEC'; this.style.color ='white'" id = 'alphaSort' style = "background-color: #A39DEC; width: 6%; height: 5%; left: 54%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+      <div onMouseOver="this.style.backgroundColor='#746AEE'; this.style.color = '#F9F9FB'"onMouseOut="this.style.backgroundColor='#A39DEC'; this.style.color ='white'" id = 'alphaSort' style = "cursor: pointer; background-color: #A39DEC; width: 6%; height: 5%; left: 54%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
         <div  style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">A-Z</div>
       </div>
-      <div id = 'prioritySort' style = "background-color: #6988EF; width: 6%; height: 5%; left: 61%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
+      <div onMouseOver="this.style.backgroundColor='#3560EF'; this.style.color = '#F9F9FB'"onMouseOut="this.style.backgroundColor='#6988EF'; this.style.color ='white'" id = 'prioritySort' style = "cursor: pointer; background-color: #6988EF; width: 6%; height: 5%; left: 61%; top: 3%;  position: absolute; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border-radius: 3px;">
         <div style = "text-align: center; position: relative; color: white; top: 30%; font-size: 0.8em">Priority</div>
       </div>
 
@@ -1182,7 +1182,7 @@ class MasterCardManager{
 
     if(confirmation){
     this.empList.splice(cardIndex, 1)
-    alert(cardIndex)
+    alert('Person has been deleted')
     console.log(this.empList)
     this.deleteManager.deleteAllCards()
     let pageNumber = this.getFromLocalStorage('currentPageIndex');

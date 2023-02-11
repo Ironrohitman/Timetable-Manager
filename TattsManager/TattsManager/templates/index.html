@@ -716,8 +716,8 @@ class AddDayDisplay{
     this.dayInfoDisplay = new DayInfoDisplay(currentWeek);
   }
 
-  updateDisplay(index, startTime, endTime, colour){
-    this.timetableDisplay.update(index, startTime, endTime, colour);
+  updateDisplay(index, startTime, endTime, colour, startTimeDate, endTimeDate){
+    this.timetableDisplay.update(index, startTime, endTime, colour, startTimeDate, endTimeDate);
     this.dayInfoDisplay.updateHoursWorked()
 
   }
@@ -790,43 +790,86 @@ class TimeTableDisplay{
   }
 
   updateText(index, startTime, endTime, colour){
-    let middle = Math.floor((Math.floor(startTime) + Math.floor(endTime))/2);
+    let middle = this.getMiddle(startTime, endTime)
+    console.log(middle)
     let leftShift = middle - 1;
     let rightShift = middle + 1;
+
+    startTime = this.formatTimeText(startTime)
+    endTime = this.formatTimeText(endTime)
+
 
     let topBarRef = document.getElementById(index.toString() + "currentMiddleBar" + leftShift.toString());
     let middleBarRef = document.getElementById(index.toString() + "currentMiddleBar" + middle.toString());
     let bottomBarRef = document.getElementById(index.toString() + "currentMiddleBar" + rightShift.toString());
 
-    if(startTime > 12){
-      startTime = (startTime - 12).toString() + "pm"
-    }
-    else{
-      startTime = (startTime).toString() + "am"
-    }
-
-    if(endTime > 12){
-      endTime = (endTime - 12).toString() + "pm"
-    }
-    else{
-      endTime = (endTime).toString() + "am"
-    }
 
 
     topBarRef.innerHTML = startTime;
 
     middleBarRef.innerHTML = "to";
 
+    topBarRef.style.fontWeight = "bold";
+    bottomBarRef.style.fontWeight = "bold";
     middleBarRef.style.fontWeight = "bold";
     bottomBarRef.innerHTML = endTime;
 
   }
 
-  update(index, startTime, endTime, colour){
+  formatTimeText(time){
+    let hours = parseInt(time.substring(0,2))
+    let minutes = parseInt(time.substring(3,5))
+    let output = ''
+
+    if(hours > 12){
+
+      output = (hours - 12).toString() + " : "
+
+    }
+    else{
+      output = hours.toString() + " : "
+    }
+    if(minutes == 0){
+      output += '00'
+    }
+    else{
+      output += minutes.toString()
+    }
+
+    if(hours >=12){
+      output += ' pm'
+    }
+    else{
+      output += ' am'
+    }
+
+    return output
+  }
+
+  getMiddle(startTimeDate, endTimeDate){
+    let startHours = parseInt(startTimeDate.substring(0,2))
+    let startMinutes = parseInt(startTimeDate.substring(3,5))
+    let startTime = startHours + startMinutes/60
+
+    let endHours = parseInt(endTimeDate.substring(0,2))
+    let endMinutes = parseInt(endTimeDate.substring(3,5))
+    let endTime = endHours + endMinutes/60
+
+    let middle = Math.floor((startTime + endTime)/2)
+
+    return middle
+
+
+  }
+
+  update(index, startTime, endTime, colour, startTimeDate, endTimeDate){
     this.updateTop(index, startTime, endTime, colour);
     this.updateMiddle(index, startTime, endTime, colour);
     this.updateBottom(index, startTime, endTime, colour);
-    this.updateText(index, startTime, endTime, colour);
+    this.updateText(index, startTimeDate, endTimeDate, colour);
+    console.log("enemo")
+    console.log(startTimeDate)
+    console.log(endTimeDate - 12)
   }
 
 }
@@ -850,10 +893,13 @@ class NewShift{
         if(startTime != "" && endTime != ""){
           let newStartTime = startTime.substring(0,2) + "." + startTime.substring(3,5);
           let newEndTime = endTime.substring(0,2) + "." + endTime.substring(3,5);
+          console.log("penis")
+          console.log(newStartTime)
+          console.log(newEndTime)
           let colourBook = this.getItem("colourBook")
           if(newEndTime > newStartTime){
               this.restoreColumn()
-              this.displayControl.updateDisplay(this.currentIndex, this.reformatNum(newStartTime), this.reformatNum(newEndTime),colourBook[this.currentIndex]);
+              this.displayControl.updateDisplay(this.currentIndex, this.reformatNum(newStartTime), this.reformatNum(newEndTime),colourBook[this.currentIndex], startTime, endTime);
               this.updateInfo(startTime, endTime, this.reformatNum(newStartTime), this.reformatNum(newEndTime));
 
 
@@ -884,7 +930,8 @@ class NewShift{
         let decimal = Math.floor((Math.floor((num - integer)*100)/60)*100)/100;
         console.log(decimal)
         let output = integer + decimal
-
+        console.log('ruo')
+        console.log(output.toFixed(1))
         return output.toFixed(1);
       }
 
@@ -1126,7 +1173,7 @@ class ChangeWeekInfo{
 
         let currentColour = colourBook[currentIndex];
 
-        this.updateTimetableDisplay.update(currentIndex,currentDay.getStartTime() , currentDay.getEndTime(), currentColour)
+        this.updateTimetableDisplay.update(currentIndex,currentDay.getStartTime() , currentDay.getEndTime(), currentColour, currentDay.getStartTimeDate(), currentDay.getEndTimeDate())
       }
       };
     }
